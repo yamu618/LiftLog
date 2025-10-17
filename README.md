@@ -111,6 +111,8 @@
 ## 画面遷移図（Figmaで作成）
 https://www.figma.com/design/dAeNNy30ueoNbF9wYoFmGe/LiftLog?node-id=0-1&t=e0oQ4VI0MprrwQhS-1
 
+---
+
 ## まとめ
 「記録するだけで、自分の成長が見える」をテーマにした、シンプルかつ実用的な筋トレ記録アプリです。  
 Rails＋Hotwireで非同期UIを実現し、Tailwind CSSで軽量・拡張性の高いデザインを提供。  

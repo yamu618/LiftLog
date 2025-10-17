@@ -113,6 +113,11 @@ https://www.figma.com/design/dAeNNy30ueoNbF9wYoFmGe/LiftLog?node-id=0-1&t=e0oQ4V
 
 ---
 
+## ER図（dbdiagram.ioで作成）
+https://dbdiagram.io/d/68f257572e68d21b4100cb5b
+
+---
+
 ## まとめ
 「記録するだけで、自分の成長が見える」をテーマにした、シンプルかつ実用的な筋トレ記録アプリです。  
 Rails＋Hotwireで非同期UIを実現し、Tailwind CSSで軽量・拡張性の高いデザインを提供。  

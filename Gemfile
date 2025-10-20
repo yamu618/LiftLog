@@ -37,17 +37,17 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 # 認証
-gem "devise"
+gem 'devise', '~> 4.9.4'
 
 # UI/UX
-gem "hotwire-rails"
-gem "tailwindcss-rails"
-gem 'simple_calendar'
-gem 'chartkick'
-gem 'groupdate'
+gem "hotwire-rails", '~> 0.1.3'
+gem "tailwindcss-rails", '~> 4.3.0'
+gem 'simple_calendar', '~> 3.1.0'
+gem 'chartkick', '~> 5.2.1'
+gem 'groupdate', '~> 6.5'
 
 # 環境変数管理
-gem "dotenv-rails"
+gem "dotenv-rails", '~> 3.1.8'
 
 # DB
 gem "annotate"
@@ -63,9 +63,9 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # テスト
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'faker'
+  gem 'rspec-rails', '~> 8.0.2'
+  gem 'factory_bot_rails', '~> 6.5.1'
+  gem 'faker', '~> 3.5.2'
 end
 
 group :development do
@@ -73,8 +73,8 @@ group :development do
   gem "web-console"
 
   # コード品質・デバッグ
-  gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false
+  gem 'rubocop', '~> 1.66', require: false
+  gem 'rubocop-rails', '~> 2.33', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-performance', require: false
   gem 'better_errors'

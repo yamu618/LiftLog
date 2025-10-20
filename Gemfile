@@ -36,7 +36,20 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# 認証
+gem "devise"
+
+# UI/UX
+gem "hotwire-rails"
+gem 'simple_calendar'
+gem 'chartkick'
+gem 'groupdate'
+
+# 環境変数管理
 gem "dotenv-rails"
+
+# DB
+gem "annotate"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -47,11 +60,25 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # テスト
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # コード品質・デバッグ
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-performance', require: false
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry-rails'
 end
 
 group :test do

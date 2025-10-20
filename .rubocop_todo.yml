@@ -1,0 +1,32 @@
+# 学習段階・開発段階での一時的な緩和設定
+# 段階的に厳格化していく予定
+
+# === メトリクス系（段階的有効化予定） ===
+# TODO: MVPリリース後に段階的有効化
+Metrics:
+  Enabled: false
+
+# === スタイル系（学習段階での緩和） ===
+# TODO: ガード節の理解後に有効化
+Style/GuardClause:
+  Enabled: false
+
+# === Rails関連（プロジェクト固有の一時的緩和） ===
+# TODO:: i18n本格導入時に有効化
+# 未i18nのチェック（バリデーションエラーメッセージをi18nに登録するのはやや冗長？なためfalse）
+Rails/I18nLocaleTexts:
+  Enabled: false
+
+# before_actionの際の未定義メソッドのチェック（deviseとの兼ね合いで一旦false）
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+# === RSpec関連（学習重視のため緩和） ===
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false

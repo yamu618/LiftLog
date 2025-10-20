@@ -41,6 +41,7 @@ gem "devise"
 
 # UI/UX
 gem "hotwire-rails"
+gem "tailwindcss-rails"
 gem 'simple_calendar'
 gem 'chartkick'
 gem 'groupdate'

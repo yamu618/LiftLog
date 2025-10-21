@@ -41,7 +41,8 @@ gem 'devise', '~> 4.9.4'
 
 # UI/UX
 gem "hotwire-rails", '~> 0.1.3'
-gem "tailwindcss-rails", '~> 4.3.0'
+# gem "tailwindcss-rails", '~> 4.3.0'
+# gem 'bootstrap', '~> 5.3'
 gem 'simple_calendar', '~> 3.1.0'
 gem 'chartkick', '~> 5.2.1'
 gem 'groupdate', '~> 6.5'

@@ -27,8 +27,16 @@ RSpec.describe "ユーザー認証", type: :system do
   end
 
   it "ログアウトできる" do
-    login_as(user, scope: :user)
+    user = create(:user)
+    visit new_user_session_path
+
+    fill_in "メールアドレス", with: user.email
+    fill_in "パスワード", with: user.password
+    click_button "ログイン"
+    
     visit root_path
+
+    expect(page).to have_button "ログアウト"
 
     accept_confirm do
       click_button "ログアウト"

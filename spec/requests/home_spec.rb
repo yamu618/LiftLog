@@ -1,10 +1,5 @@
 require "rails_helper"
 
 RSpec.describe "Homes", type: :request do
-  describe "GET /index" do
-    xit "returns http success" do
-      get root_path
-      expect(response).to have_http_status(:success)
-    end
-  end
+  skip "まだ実装中のため、テスト全体をスキップ"
 end

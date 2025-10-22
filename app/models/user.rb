@@ -24,14 +24,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :username, presence: true,
-                       length: { maximum: 50 },
-                       format: { with: /\A[a-zA-Z0-9_]+\z/, 
-                                message: "は英数字とアンダーバー(_)のみ使用できます" }
-
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
-  end
+                       length: { maximum: 20 }
 end

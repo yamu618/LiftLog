@@ -38,6 +38,7 @@ gem "bootsnap", require: false
 
 # 認証
 gem 'devise', '~> 4.9.4'
+gem 'devise-i18n', '~> 1.15'
 
 # UI/UX
 gem "hotwire-rails", '~> 0.1.3'

@@ -43,6 +43,8 @@ RSpec.configure do |config|
   ]
   # FactoryBot統合
   config.include FactoryBot::Syntax::Methods
+  # Deviseヘルパーメソッド
+  config.include Devise::Test::IntegrationHelpers, type: :system
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

@@ -8,6 +8,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  username               :string           default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -21,4 +22,16 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  validates :username, presence: true,
+                       length: { maximum: 50 },
+                       format: { with: /\A[a-zA-Z0-9_]+\z/, 
+                                message: "は英数字とアンダーバー(_)のみ使用できます" }
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end
 end

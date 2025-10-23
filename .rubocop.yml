@@ -34,6 +34,8 @@ AllCops:
 Layout/LineLength:
   Enabled: true
   Max: 120
+  Exclude:
+    - 'config/initializers/devise.rb'
 
 # メソッドの改行ルール
 Layout/MultilineMethodCallIndentation:

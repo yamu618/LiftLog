@@ -1,1 +1,27 @@
-<h1>LiftLog仮TOPページ</h1>
+<!-- Bootstrap + Hotwire 簡単テスト -->
+<div class="container mt-4">
+  <h2>🧪 動作テスト</h2>
+  
+  <!-- Bootstrap テスト -->
+  <div class="alert alert-success">
+    ✅ Bootstrap CSS: この緑のアラートが表示されれば成功！
+  </div>
+  
+  <!-- Bootstrap JavaScript テスト -->
+  <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#testCollapse">
+    クリックして開閉テスト
+  </button>
+  <div class="collapse mt-2" id="testCollapse">
+    <div class="alert alert-info">
+      ✅ Bootstrap JS: この部分が開閉できれば成功！
+    </div>
+  </div>
+  
+  <!-- Hotwire テスト -->
+  <div class="mt-3">
+    <%= button_to "ページ更新テスト", request.path, method: :get, 
+        class: "btn btn-warning", 
+        form: { data: { turbo_frame: "_top" } } %>
+    <small class="text-muted d-block">✅ Hotwire: ページがスムーズに更新されれば成功！</small>
+  </div>
+</div>

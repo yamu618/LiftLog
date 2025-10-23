@@ -38,10 +38,12 @@ gem "bootsnap", require: false
 
 # 認証
 gem 'devise', '~> 4.9.4'
+gem 'devise-i18n', '~> 1.15'
 
 # UI/UX
 gem "hotwire-rails", '~> 0.1.3'
-gem "tailwindcss-rails", '~> 4.3.0'
+# gem "tailwindcss-rails", '~> 4.3.0'
+# gem 'bootstrap', '~> 5.3'
 gem 'simple_calendar', '~> 3.1.0'
 gem 'chartkick', '~> 5.2.1'
 gem 'groupdate', '~> 6.5'
@@ -86,4 +88,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "webdrivers"
 end

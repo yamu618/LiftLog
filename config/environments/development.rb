@@ -81,4 +81,7 @@ Rails.application.configure do
 
   # Better errorsをDocker環境で動かす用に追記
   BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+
+  #deviseの初期設定
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end

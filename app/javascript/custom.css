@@ -1,0 +1,51 @@
+/* Bootstrap変数のカスタマイズ */
+:root {
+  --bs-primary: #007bff;
+  --bs-secondary: #6c757d;
+  --bs-success: #28a745;
+}
+
+/* プロジェクト固有のスタイル */
+.lift-log-header {
+  background: linear-gradient(135deg, var(--bs-primary), #0056b3);
+  color: white;
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+}
+
+.workout-card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-radius: 12px;
+}
+
+.workout-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-workout {
+  background: linear-gradient(45deg, var(--bs-primary), var(--bs-success));
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.btn-workout:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+.stats-badge {
+  background: var(--bs-primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}

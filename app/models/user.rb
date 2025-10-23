@@ -26,4 +26,14 @@ class User < ApplicationRecord
 
   validates :username, presence: true,
                        length: { maximum: 20 }
+
+  after_create :copy_default_exercises
+
+  def copy_default_exercises
+    Exercise.where(user_id: nil).each do |template|
+      self.exercises.create!(
+       name: template.name
+       category_id: template.category_id
+      )
+  end
 end

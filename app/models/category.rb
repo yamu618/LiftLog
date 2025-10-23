@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 class Category < ApplicationRecord
-  has_many :workouts, dependent: :destroy
+  has_many :exercises, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 end

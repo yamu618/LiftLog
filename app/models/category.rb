@@ -10,5 +10,5 @@
 class Category < ApplicationRecord
   has_many :workouts, dependent: :destroy
 
-  validates :name, presenec: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true
 end

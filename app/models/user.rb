@@ -22,6 +22,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :workouts, dependent: :destroy
+  has_many :exercises, dependent: :destroy
 
   validates :username, presence: true,
                        length: { maximum: 20 }

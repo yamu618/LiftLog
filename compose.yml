@@ -17,6 +17,17 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  chrome:
+    image: selenium/standalone-chrome:latest
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+      - "7900:7900"  # VNCポート（デバッグ用）
+    environment:
+      - SE_NODE_MAX_SESSIONS=2
+      - SE_NODE_SESSION_TIMEOUT=300
+
   web:
     build:
       context: .
@@ -32,6 +43,7 @@ services:
       TZ: Asia/Tokyo
       RAILS_ENV: development
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      SELENIUM_DRIVER_URL: http://chrome:4444/wd/hub
     env_file:
       - .env
     ports:
@@ -39,6 +51,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      chrome:
+        condition: service_started
+        
 volumes:
   bundle_data:
   postgresql_data:

@@ -26,20 +26,19 @@ RSpec.describe "ユーザー認証", type: :system do
     expect(page).to have_content("ログインしました")
   end
 
-  it "ログアウトできる" do
+  it "ログアウトできる", js: true do
     user = create(:user)
     visit new_user_session_path
 
     fill_in "メールアドレス", with: user.email
     fill_in "パスワード", with: user.password
     click_button "ログイン"
-    
-    visit root_path
 
-    expect(page).to have_button "ログアウト"
+    expect(page).to have_current_path(root_path)
+    expect(page).to have_link "ログアウト"
 
     accept_confirm do
-      click_button "ログアウト"
+      click_link "ログアウト"
     end
 
     expect(page).to have_content("ログアウトしました")

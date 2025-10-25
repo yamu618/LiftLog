@@ -46,7 +46,7 @@ RUN if [ -f "package.json" ]; then yarn install --frozen-lockfile --production; 
 COPY . .
 
 # assetsのプリコンパイル
-RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
+# RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
 
 # bootsnap最適化
 RUN bundle exec bootsnap precompile app/ lib/

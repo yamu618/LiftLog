@@ -1,1 +1,42 @@
+<h1 class="mb-4">種目一覧</h1>
 
+<!-- カテゴリー選択 -->
+<ul class="nav nav-tabs mb-3">
+  <% @categories.each do |category| %>
+    <li class="nav-item">
+      <%= link_to category.name,
+          exercises_path(category_id: category.id),
+          class: "nav-link #{'active' if category == @selected_category}" %>
+    </li>
+  <% end %>
+</ul>
+
+<div class="d-flex justify-content-between align-items-start">
+  <!-- 種目一覧 -->
+  <div class="flex-grow-1 me-3">
+    <div class="list-group">
+      <% @exercises.each do |exercise| %>
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <span><%= exercise.name %></span>
+          <% if exercise.persisted? %>
+            <div class="btn-group btn-group-sm">
+              <%= link_to "編集", edit_exercise_path(exercise), class: "btn btn-warning" %>
+              <%= button_to "削除", exercise_path(exercise),
+                method: :delete,
+                data: { 
+                  turbo_method: :delete,
+                  turbo_confirm: "本当に削除しますか？" 
+                },
+                class: "btn btn-danger" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- 種目追加フォーム -->
+  <div class="flex-shrink-0" style="min-width: 250px;">
+    <%= render partial: "form", locals: { exercise: Exercise.new(category: @selected_category) } %>
+  </div>
+</div>

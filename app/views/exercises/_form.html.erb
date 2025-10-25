@@ -1,0 +1,9 @@
+<%= form_with(model: exercise, local: true) do |f| %>
+  <div class="input-group mb-3">
+    <%= f.text_field :name, class: "form-control", placeholder: "種目名" %>
+    <%= f.hidden_field :category_id, value: exercise.category_id %>
+    <button class="btn btn-primary" type="submit">
+      <%= exercise.persisted? ? "更新" : "追加" %>
+    </button>
+  </div>
+<% end %>

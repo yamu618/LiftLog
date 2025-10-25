@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :exercises, only: %i[index, create, update, destroy]
+  resources :exercises, only: %i[index edit create update destroy]
   
   get "home/index"
 

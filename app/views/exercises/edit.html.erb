@@ -1,0 +1,5 @@
+<h1 class="mb-4">種目編集</h1>
+
+<%= render partial: "form", locals: { exercise: @exercise } %>
+
+<%= link_to "キャンセル", exercises_path(category_id: @exercise.category_id), class: "btn btn-secondary mt-3" %>

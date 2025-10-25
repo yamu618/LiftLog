@@ -41,8 +41,8 @@ RUN yarn install --frozen-lockfile --production
 COPY . .
 
 # assetsのプリコンパイル
-RUN --mount=type=secret,id=rails_master_key \
-    SECRET_KEY_BASE=$(openssl rand -hex 64) bundle exec rails assets:precompile
+ARG SECRET_KEY_BASE=dummy
+RUN RAILS_ENV=production SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rails assets:precompile
 
 # bootsnap 最適化
 RUN bundle exec bootsnap precompile app/ lib/

@@ -18,11 +18,23 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :workouts, dependent: :destroy
+  has_many :exercises, dependent: :destroy
+
   validates :username, presence: true,
                        length: { maximum: 20 }
+
+  after_create :copy_default_exercises
+
+  def copy_default_exercises
+    Exercise.where(user_id: nil).each do |template|
+      self.exercises.create!(
+       name: template.name,
+       category_id: template.category_id
+      )
+    end
+  end
 end

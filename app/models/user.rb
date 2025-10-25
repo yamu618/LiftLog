@@ -32,8 +32,9 @@ class User < ApplicationRecord
   def copy_default_exercises
     Exercise.where(user_id: nil).each do |template|
       self.exercises.create!(
-       name: template.name
+       name: template.name,
        category_id: template.category_id
       )
+    end
   end
 end

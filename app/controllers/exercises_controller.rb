@@ -47,9 +47,9 @@ class ExercisesController < ApplicationController
   end
 
   def error_message(exercise)
-    if exercise.errors[:name].include?("can't be blank")
+    if exercise.errors.full_messages.include?("種目名を入力してください")
       "種目名を入力してください"
-    elsif exercise.errors[:name].include?("has already been taken")
+    elsif exercise.errors.full_messages.include?("種目名はすでに存在します")
       "その種目は既に存在しています"
     else
       "種目を保存できませんでした"

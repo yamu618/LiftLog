@@ -15,8 +15,10 @@
 #
 # Indexes
 #
-#  index_workouts_on_exercise_id  (exercise_id)
-#  index_workouts_on_user_id      (user_id)
+#  index_workouts_on_exercise_id               (exercise_id)
+#  index_workouts_on_performed_on              (performed_on)
+#  index_workouts_on_user_id                   (user_id)
+#  index_workouts_on_user_id_and_performed_on  (user_id,performed_on)
 #
 # Foreign Keys
 #

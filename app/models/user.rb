@@ -30,10 +30,10 @@ class User < ApplicationRecord
   after_create :copy_default_exercises
 
   def copy_default_exercises
-    Exercise.where(user_id: nil).each do |template|
-      self.exercises.create!(
-       name: template.name,
-       category_id: template.category_id
+    Exercise.where(user_id: nil).find_each do |template|
+      exercises.create!(
+        name: template.name,
+        category_id: template.category_id
       )
     end
   end

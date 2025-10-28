@@ -11,8 +11,9 @@
 #
 # Indexes
 #
-#  index_exercises_on_category_id  (category_id)
-#  index_exercises_on_user_id      (user_id)
+#  index_exercises_on_category_id                       (category_id)
+#  index_exercises_on_name_and_category_id_and_user_id  (name,category_id,user_id) UNIQUE
+#  index_exercises_on_user_id                           (user_id)
 #
 # Foreign Keys
 #

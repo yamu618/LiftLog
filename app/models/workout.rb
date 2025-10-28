@@ -15,8 +15,10 @@
 #
 # Indexes
 #
-#  index_workouts_on_exercise_id  (exercise_id)
-#  index_workouts_on_user_id      (user_id)
+#  index_workouts_on_exercise_id               (exercise_id)
+#  index_workouts_on_performed_on              (performed_on)
+#  index_workouts_on_user_id                   (user_id)
+#  index_workouts_on_user_id_and_performed_on  (user_id,performed_on)
 #
 # Foreign Keys
 #
@@ -31,5 +33,4 @@ class Workout < ApplicationRecord
   validates :weight, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :reps, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   validates :performed_on, presence: true
-
 end

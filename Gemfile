@@ -75,7 +75,7 @@ group :development do
   gem "web-console"
 
   # コード品質・デバッグ
-  gem 'rubocop', '~> 1.66', require: false
+  gem 'rubocop', '~> 1.81', require: false
   gem 'rubocop-rails', '~> 2.33', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-performance', require: false

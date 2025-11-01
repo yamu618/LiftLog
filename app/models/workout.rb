@@ -30,4 +30,8 @@ class Workout < ApplicationRecord
 
   # TODO: 統計機能開発時に0の扱いを見直す
   validates :performed_on, presence: true
+
+  def total_weight
+    workout_sets.sum { |s| s.weight * s.reps }
+  end
 end

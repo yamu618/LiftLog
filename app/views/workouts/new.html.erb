@@ -1,0 +1,42 @@
+<h1>新規ワークアウト</h1>
+
+<%= form_with model: @workout, local: true do |f| %>
+  <div class="form-group mb-3">
+    <%= f.label :performed_on, "トレーニング日" %>
+    <%= f.date_field :performed_on, class: "form-control" %>
+  </div>
+
+  <ul class="nav nav-tabs mb-3" id="categoryTab" role="tablist">
+    <% Category.all.each_with_index do |category, index| %>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link <%= 'active' if index == 0 %>" 
+                id="tab-<%= category.id %>" 
+                data-bs-toggle="tab" 
+                data-bs-target="#category-<%= category.id %>" 
+                type="button" role="tab">
+          <%= category.name %>
+        </button>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="tab-content">
+    <% Category.all.each_with_index do |category, index| %>
+      <div class="tab-pane fade <%= 'show active' if index == 0 %>" 
+           id="category-<%= category.id %>" 
+           role="tabpanel">
+        <div class="list-group">
+          <% @exercises.select { |ex| ex.category_id == category.id }.each do |exercise| %>
+            <label class="list-group-item list-group-item-action">
+              <%= f.radio_button :exercise_id, exercise.id, class: "form-check-input me-2" %>
+              <%= exercise.name %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= f.submit "作成", class: "btn btn-success mt-3" %>
+  <%= link_to "キャンセル", workouts_path, class: "btn btn-secondary mt-3" %>
+<% end %>

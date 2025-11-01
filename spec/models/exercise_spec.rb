@@ -11,15 +11,16 @@
 #
 # Indexes
 #
-#  index_exercises_on_category_id  (category_id)
-#  index_exercises_on_user_id      (user_id)
+#  index_exercises_on_category_id                       (category_id)
+#  index_exercises_on_name_and_category_id_and_user_id  (name,category_id,user_id) UNIQUE
+#  index_exercises_on_user_id                           (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (category_id => categories.id)
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Exercise, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"

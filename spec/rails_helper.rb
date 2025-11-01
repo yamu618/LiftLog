@@ -21,6 +21,8 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # Deviseヘルパーメソッド
   config.include Devise::Test::IntegrationHelpers, type: :system
+  # Railsのヘルパーメソッド
+  config.include Rails.application.routes.url_helpers
 
   config.use_transactional_fixtures = true
 

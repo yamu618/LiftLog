@@ -2,12 +2,15 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      exercise: 種目
     attributes:
       user:
         username: ユーザー名
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（確認）
+      exercise:
+        name: 種目名
     errors:
       models:
         user:
@@ -18,3 +21,4 @@ ja:
               too_short: "は%{count}文字以上で入力してください"
               too_long: "は%{count}文字以内で入力してください"
               invalid: "は英数字とアンダーバー(_)のみ使用できます"
+        

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "ユーザー認証", type: :system do
   let(:user) { create(:user) }
@@ -26,7 +26,7 @@ RSpec.describe "ユーザー認証", type: :system do
     expect(page).to have_content("ログインしました")
   end
 
-  it "ログアウトできる", js: true do
+  it "ログアウトできる", :js do
     user = create(:user)
     visit new_user_session_path
 
@@ -65,6 +65,6 @@ RSpec.describe "ユーザー認証", type: :system do
     end
 
     expect(page).to have_content("アカウントを削除しました")
-    expect(User.exists?(user.id)).to be_falsey
+    expect(User.where(id: user.id)).not_to exist
   end
 end

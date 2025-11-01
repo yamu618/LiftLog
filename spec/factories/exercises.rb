@@ -22,7 +22,8 @@
 #
 FactoryBot.define do
   factory :exercise do
-    name { "MyString" }
-    category { nil }
+    sequence(:name) { |n| "種目#{n}" }
+    category { Category.first }
+    user { association :user }
   end
 end

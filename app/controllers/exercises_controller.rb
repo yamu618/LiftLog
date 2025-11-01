@@ -32,8 +32,7 @@ class ExercisesController < ApplicationController
 
   def destroy
     @exercise.destroy
-
-    redirect_to exercises_path(category_id: @exercise.category_id), notice: "種目を削除しました"
+    redirect_to exercises_path(category_id: @exercise.category_id), notice: "種目を削除しました", status: :see_other
   end
 
   private

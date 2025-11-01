@@ -5,9 +5,7 @@
 #  id             :bigint           not null, primary key
 #  calculated_1rm :float
 #  performed_on   :date             not null
-#  reps           :integer          default(0), not null
 #  total_weight   :float
-#  weight         :float            default(0.0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  exercise_id    :bigint           not null

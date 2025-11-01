@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_28_124911) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_01_134527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,11 +45,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_28_124911) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "workout_sets", force: :cascade do |t|
+    t.bigint "workout_id", null: false
+    t.float "weight", default: 0.0, null: false
+    t.integer "reps", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["workout_id"], name: "index_workout_sets_on_workout_id"
+  end
+
   create_table "workouts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "exercise_id", null: false
-    t.float "weight", default: 0.0, null: false
-    t.integer "reps", default: 0, null: false
     t.date "performed_on", null: false
     t.float "total_weight"
     t.float "calculated_1rm"
@@ -63,6 +70,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_28_124911) do
 
   add_foreign_key "exercises", "categories"
   add_foreign_key "exercises", "users"
+  add_foreign_key "workout_sets", "workouts"
   add_foreign_key "workouts", "exercises"
   add_foreign_key "workouts", "users"
 end

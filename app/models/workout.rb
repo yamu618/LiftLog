@@ -5,9 +5,7 @@
 #  id             :bigint           not null, primary key
 #  calculated_1rm :float
 #  performed_on   :date             not null
-#  reps           :integer          default(0), not null
 #  total_weight   :float
-#  weight         :float            default(0.0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  exercise_id    :bigint           not null
@@ -28,9 +26,8 @@
 class Workout < ApplicationRecord
   belongs_to :user
   belongs_to :exercise
+  has_many :workout_sets, dependent: :destroy
 
   # TODO: 統計機能開発時に0の扱いを見直す
-  validates :weight, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :reps, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   validates :performed_on, presence: true
 end

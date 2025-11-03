@@ -42,6 +42,7 @@ gem 'devise-i18n', '~> 1.15'
 
 # UI/UX
 gem "hotwire-rails", '~> 0.1.3'
+gem 'simple_form'
 # gem "tailwindcss-rails", '~> 4.3.0'
 # gem 'bootstrap', '~> 5.3'
 gem 'simple_calendar', '~> 3.1.0'

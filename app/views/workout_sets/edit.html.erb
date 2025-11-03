@@ -1,0 +1,31 @@
+<h1 class="mb-4">セット編集</h1>
+
+<% if @set.errors.any? %>
+  <div class="alert alert-danger">
+    <ul class="mb-0">
+      <% @set.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<p><strong>日付:</strong> <%= @set.workout.performed_on %></p>
+<p><strong>種目:</strong> <%= @set.workout.exercise.name %></p>
+
+<%= form_with model: @set, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :weight, "重量(kg)", class: "form-label" %>
+    <%= f.number_field :weight, step: 0.5, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :reps, "回数(回)", class: "form-label" %>
+    <%= f.number_field :reps, class: "form-control" %>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= f.submit "更新", class: "btn btn-success" %>
+    <%= link_to "キャンセル", workout_path(@set.workout), class: "btn btn-secondary" %>
+  </div>
+<% end %>

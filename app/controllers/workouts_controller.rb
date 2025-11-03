@@ -1,31 +1,42 @@
 class WorkoutsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_workout, only: %i[destroy]
+  before_action :set_workout, only: %i[show destroy new_set create_set]
   skip_before_action :authenticate_user!, only: %i[index]
 
   def index
     @selected_date = params[:date].present? ? Date.parse(params[:date]) : Date.today
-    @workouts = current_user.workouts.includes(exercise: :category, workout_sets: []).where(performed_on: @selected_date).order("categories.name, exercises.name")
+    if user_signed_in?
+      @workouts = current_user.workouts
+                            .includes(exercise: :category, workout_sets: [])
+                            .where(performed_on: @selected_date)
+                            .order("categories.name, exercises.name")
+    else
+      @workouts = [] 
+    end
+
+    @workout_title = user_signed_in? ? "#{current_user.username}のワークアウト" : "LiftLogへようこそ！"
   end
 
   def new
     @workout = current_user.workouts.new(performed_on: params[:date] || Date.today)
     @exercises = current_user.exercises.includes(:category)
+    @categories = Category.order(:id)
   end
 
   def create
     @workout = current_user.workouts.new(workout_params)
     if @workout.save
-      redirect_to workouts_path, notice: "ワークアウトを記録しました"
+      redirect_to workouts_path, notice: "ワークアウトを作成しました"
     else
       @exercises = current_user.exercises.includes(:category)
+      @categories = Category.order(:id)
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @workout_sets = @workout.workout_sets.order(:created_at)
-    @workout_set = @workout.workout_sets.new
+    @exercise_name = @workout.exercise.name
+    @sets = @workout.workout_sets.order(:id)
   end
 
   def destroy
@@ -33,13 +44,30 @@ class WorkoutsController < ApplicationController
     redirect_to workouts_path, notice: "ワークアウトを削除しました", status: :see_other
   end
 
+  def new_set
+    @set = @workout.workout_sets.new(weight: 0, reps: 0)
+  end
+
+  def create_set
+    @set = @workout.workout_sets.new(set_params)
+    if @set.save
+      redirect_to workout_path(@workout), notice: "セットを追加しました"
+    else
+      render :new_set, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_workout
-    @workout = current_user.workouts.find(params:[id])
+    @workout = current_user.workouts.find(params[:id])
   end
 
   def workout_params
-    params.requre(:workout).permit(:exercise_id, :performed_on)
+    params.require(:workout).permit(:exercise_id, :performed_on)
+  end
+
+  def set_params
+    params.require(:workout_set).permit(:weight, :reps)
   end
 end

@@ -28,7 +28,6 @@ class Workout < ApplicationRecord
   belongs_to :exercise
   has_many :workout_sets, dependent: :destroy
 
-  # TODO: 統計機能開発時に0の扱いを見直す
   validates :performed_on, presence: true
 
   def total_weight

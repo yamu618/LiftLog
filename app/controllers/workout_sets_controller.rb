@@ -1,30 +1,31 @@
 class WorkoutSetsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_workout
+  before_action :set_workout_set, only: %i[edit update destroy]
 
-  def create
-    @workout_set = @workout.workout_sets.new(workout_set_params)
-    if @workout_set.save
-      redirect_to workout_path(@workout), notice: "セットを追加しました", status: :see_other
+  def edit
+  end
+
+  def update
+    if @set.update(set_params)
+      redirect_to workout_path(@set.workout), notice: "セットを更新しました"
     else
-      @workout_sets = @workout.workout_sets.order(:created_at)
-      render "workouts/show", status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @workout_set = @workout.workout_sets.find(params[:id])
-    @workout_set.destroy
-    redirect_to workout_path(@workout), notice: "セットを削除しました", status: :see_other
+    workout = @set.workout
+    @set.destroy
+    redirect_to workout_path(workout), notice: "セットを削除しました"
   end
 
   private
 
-  def set_workout
-    @workout = current_user.workouts.find(params[:workout_id])
+  def set_workout_set
+    @set = current_user.workout_sets.find(params[:id])
   end
 
-  def workout_set_params
+  def set_params
     params.require(:workout_set).permit(:weight, :reps)
   end
 end

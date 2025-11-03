@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :exercises, only: %i[index edit create update destroy]
-  resources :workouts, except: [:edit, :update] do
-    resources :workout_sets, only: [:create, :destroy]
+  resources :workouts do
+    member do
+      get :new_set
+      post :create_set
+    end
   end
+  resources :workout_sets, only: %i[edit update destroy]
 
   get "home/index"
 

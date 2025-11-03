@@ -3,6 +3,8 @@ ja:
     models:
       user: ユーザー
       exercise: 種目
+      workout: ワークアウト
+      workout_set: ワークアウトセット
     attributes:
       user:
         username: ユーザー名
@@ -11,6 +13,9 @@ ja:
         password_confirmation: パスワード（確認）
       exercise:
         name: 種目名
+      workout_set:
+        weight: 重量
+        reps: 回数
     errors:
       models:
         user:

@@ -84,4 +84,10 @@ Rails.application.configure do
 
   #deviseの初期設定
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  #スマホでlocalhostにアクセス
+  if Rails.env.development?
+    ip = ENV["DEV_SMARTPHONE_IP"]
+    config.hosts << ip if ip.present?
+  end
 end

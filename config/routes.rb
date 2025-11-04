@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "reports/index"
   devise_for :users
   resources :exercises, only: %i[index edit create update destroy]
   resources :workouts do
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
     end
   end
   resources :workout_sets, only: %i[edit update destroy]
+  resources :reports, only: %i[index]
 
   get "home/index"
 

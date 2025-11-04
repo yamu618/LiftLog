@@ -25,12 +25,8 @@
 #
 FactoryBot.define do
   factory :workout do
-    user { nil }
-    exercise { nil }
-    weight { 1.5 }
-    reps { 1 }
-    performed_on { "2025-10-23" }
-    total_weight { 1.5 }
-    calculated_1rm { 1.5 }
+    association :user
+    association :exercise
+    performed_on { Date.today }
   end
 end

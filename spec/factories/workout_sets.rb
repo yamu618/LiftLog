@@ -19,8 +19,8 @@
 #
 FactoryBot.define do
   factory :workout_set do
-    workout { nil }
-    weight { 1.5 }
-    reps { 1 }
+    association :workout
+    weight { 60 }
+    reps { 10 }
   end
 end

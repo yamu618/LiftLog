@@ -21,12 +21,19 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # Deviseヘルパーメソッド
   config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Warden::Test::Helpers
+  config.before(:suite) { Warden.test_mode! }
+
   # Railsのヘルパーメソッド
   config.include Rails.application.routes.url_helpers
 
   config.use_transactional_fixtures = true
 
   config.filter_rails_from_backtrace!
+
+  config.before(:each) do
+    Time.zone = "Asia/Tokyo"
+  end
 
   config.before(:each, type: :system) do
     driven_by :remote_chrome

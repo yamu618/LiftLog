@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "ワークアウト管理", type: :system do
   let(:user) { create(:user) }
@@ -10,12 +10,12 @@ RSpec.describe "ワークアウト管理", type: :system do
   end
 
   describe "一覧ページ" do
-    let!(:workout) { create(:workout, user: user, exercise: exercise) }
+    let!(:workout) { create(:workout, user: user, exercise: exercise) } # rubocop:disable RSpec/LetSetup
 
     it "ワークアウトが一覧に表示される" do
-     visit workouts_path
-     expect(page).to have_content("#{exercise.name}")
-     expect(page).to have_content("#{category.name}")
+      visit workouts_path
+      expect(page).to have_content(exercise.name)
+      expect(page).to have_content(category.name)
     end
   end
 
@@ -24,17 +24,17 @@ RSpec.describe "ワークアウト管理", type: :system do
       visit new_workout_path
       click_button category.name
 
-      fill_in "トレーニング日", with: Date.today
-      choose "#{exercise.name}"
+      fill_in "トレーニング日", with: Time.zone.today
+      choose exercise.name
       click_button "作成"
 
       expect(page).to have_content("ワークアウトを作成しました")
-      expect(Workout.last.exercise.name).to eq("#{exercise.name}")
+      expect(Workout.last.exercise.name).to eq(exercise.name)
     end
 
     it "種目未入力でエラーになる" do
       visit new_workout_path
-      fill_in "トレーニング日", with: Date.today
+      fill_in "トレーニング日", with: Time.zone.today
       click_button "作成"
 
       expect(page).to have_content("種目を入力してください")
@@ -47,7 +47,7 @@ RSpec.describe "ワークアウト管理", type: :system do
     it "ワークアウト詳細ページが表示される" do
       visit workout_path(workout)
       expect(page).to have_content("ワークアウト詳細")
-      expect(page).to have_content("#{exercise.name}")
+      expect(page).to have_content(exercise.name)
     end
   end
 

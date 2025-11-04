@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "ワークアウトセット管理", type: :system do
   let(:user) { create(:user) }
   let!(:category) { create(:category) }
   let!(:exercise) { create(:exercise, category: category, user: user) }
-  let!(:workout) { create(:workout, exercise: exercise, user: user, performed_on: Date.today) }
+  let!(:workout) { create(:workout, exercise: exercise, user: user, performed_on: Time.zone.today) }
 
   before do
     login_as(user)
@@ -49,8 +49,7 @@ RSpec.describe "ワークアウトセット管理", type: :system do
   end
 
   describe "セット一覧" do
-    let!(:set1) { create(:workout_set, workout: workout, weight: 40, reps: 0) }
-    let!(:set2) { create(:workout_set, workout: workout, weight: 50, reps: 10) }
+    let!(:set_a) { create(:workout_set, workout: workout, weight: 40, reps: 0) } # rubocop:disable RSpec/LetSetup
 
     it "セットが一覧表示される" do
       visit workout_path(workout)

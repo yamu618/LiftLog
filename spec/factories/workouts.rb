@@ -27,6 +27,6 @@ FactoryBot.define do
   factory :workout do
     association :user
     association :exercise
-    performed_on { Date.today }
+    performed_on { Time.zone.today }
   end
 end

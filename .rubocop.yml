@@ -108,3 +108,6 @@ Performance/CollectionLiteralInLoop:
 
 Performance/StringReplacement:
   Enabled: true 
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10

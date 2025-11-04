@@ -23,7 +23,7 @@
 FactoryBot.define do
   factory :exercise do
     sequence(:name) { |n| "種目#{n}" }
-    category { Category.first }
-    user { association :user }
+    association :category
+    association :user
   end
 end

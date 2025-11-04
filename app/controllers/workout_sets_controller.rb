@@ -2,8 +2,7 @@ class WorkoutSetsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_workout_set, only: %i[edit update destroy]
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @set.update(set_params)

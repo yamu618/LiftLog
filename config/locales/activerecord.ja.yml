@@ -13,6 +13,9 @@ ja:
         password_confirmation: パスワード（確認）
       exercise:
         name: 種目名
+      workout:
+        exercise: 種目
+        performed_on: トレーニング日
       workout_set:
         weight: 重量
         reps: 回数

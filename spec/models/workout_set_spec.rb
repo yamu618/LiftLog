@@ -17,7 +17,7 @@
 #
 #  fk_rails_...  (workout_id => workouts.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe WorkoutSet, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"

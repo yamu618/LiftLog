@@ -343,9 +343,6 @@ GEM
       rubyzip (>= 1.2.2)
     simple_calendar (3.1.0)
       rails (>= 6.1)
-    simple_form (5.4.0)
-      actionpack (>= 7.0)
-      activemodel (>= 7.0)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -431,7 +428,6 @@ DEPENDENCIES
   rubocop-rspec
   selenium-webdriver
   simple_calendar (~> 3.1.0)
-  simple_form
   sprockets-rails
   stimulus-rails
   turbo-rails

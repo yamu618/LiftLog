@@ -4,21 +4,21 @@ class WorkoutsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index]
 
   def index
-    @selected_date = params[:date].present? ? Date.parse(params[:date]) : Date.today
-    if user_signed_in?
-      @workouts = current_user.workouts
-                            .includes(exercise: :category, workout_sets: [])
-                            .where(performed_on: @selected_date)
-                            .order("categories.name, exercises.name")
-    else
-      @workouts = [] 
-    end
+    @selected_date = params[:date].present? ? Date.parse(params[:date]) : Time.zone.today
+    @workouts = if user_signed_in?
+                  current_user.workouts
+                    .includes(exercise: :category, workout_sets: [])
+                    .where(performed_on: @selected_date)
+                    .order("categories.name, exercises.name")
+                else
+                  []
+                end
 
     @workout_title = user_signed_in? ? "#{current_user.username}のワークアウト" : "LiftLogへようこそ！"
   end
 
   def new
-    @workout = current_user.workouts.new(performed_on: params[:date] || Date.today)
+    @workout = current_user.workouts.new(performed_on: params[:date] || Time.zone.today)
     @exercises = current_user.exercises.includes(:category)
     @categories = Category.order(:id)
   end

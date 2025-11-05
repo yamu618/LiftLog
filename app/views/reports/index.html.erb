@@ -1,30 +1,29 @@
 <div class="container mt-2">
   <h2 class="mb-4">トレーニングレポート</h2>
 
-  <!-- トレーニング日数 -->
   <div class="card mb-4 shadow-sm">
     <div class="card-header bg-primary text-white">
       <strong>トレーニング日数</strong>
     </div>
     <div class="card-body">
       <div class="row text-center">
-        <div class="col-md-4">
+        <div class="col-12 col-md-4 mb-3 mb-md-0">
           <p class="text-muted mb-1">総トレーニング日数</p>
-          <h4><%= @total_days %> 日</h4>
+          <h3 class="fw-bold"><%= @total_days %> 日</h3>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-12 col-md-4 mb-3 mb-md-0">
           <p class="text-muted mb-1">今週</p>
-          <h4><%= @this_week_days %> 日</h4>
-          <p class="<%= @week_days_diff >= 0 ? 'text-success' : 'text-danger' %>">
+          <h3 class="fw-bold"><%= @this_week_days %> 日</h3>
+          <p class="<%= @week_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
             （前週比 <%= @week_days_diff >= 0 ? '+' : '' %><%= @week_days_diff %>）
           </p>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-12 col-md-4">
           <p class="text-muted mb-1">今月</p>
-          <h4><%= @this_month_days %> 日</h4>
-          <p class="<%= @month_days_diff >= 0 ? 'text-success' : 'text-danger' %>">
+          <h3 class="fw-bold"><%= @this_month_days %> 日</h3>
+          <p class="<%= @month_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
             （前月比 <%= @month_days_diff >= 0 ? '+' : '' %><%= @month_days_diff %>）
           </p>
         </div>
@@ -32,25 +31,24 @@
     </div>
   </div>
 
-  <!-- 総重量 -->
   <div class="card shadow-sm">
     <div class="card-header bg-success text-white">
       <strong>総挙上重量</strong>
     </div>
     <div class="card-body">
       <div class="row text-center">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
           <p class="text-muted mb-1">今週</p>
-          <h4><%= number_with_delimiter(@this_week_weight.round) %> kg</h4>
-          <p class="<%= @week_weight_diff >= 0 ? 'text-success' : 'text-danger' %>">
+          <h3 class="fw-bold"><%= number_with_delimiter(@this_week_weight.round) %> kg</h3>
+          <p class="<%= @week_weight_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
             （前週比 <%= @week_weight_diff >= 0 ? '+' : '' %><%= number_with_delimiter(@week_weight_diff.round) %> kg）
           </p>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <p class="text-muted mb-1">今月</p>
-          <h4><%= number_with_delimiter(@this_month_weight.round) %> kg</h4>
-          <p class="<%= @month_weight_diff >= 0 ? 'text-success' : 'text-danger' %>">
+          <h3 class="fw-bold"><%= number_with_delimiter(@this_month_weight.round) %> kg</h3>
+          <p class="<%= @month_weight_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
             （前月比 <%= @month_weight_diff >= 0 ? '+' : '' %><%= number_with_delimiter(@month_weight_diff.round) %> kg）
           </p>
         </div>
@@ -59,6 +57,6 @@
   </div>
 
   <div class="text-center mt-4">
-    <%= link_to "ワークアウト一覧へ戻る", workouts_path, class: "btn btn-outline-secondary" %>
+    <%= link_to "ワークアウト一覧へ戻る", workouts_path, class: "btn btn-outline-secondary w-100 w-md-auto" %>
   </div>
 </div>

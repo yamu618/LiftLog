@@ -1,5 +1,5 @@
- <div class="container mt-2">
-  <h2 class="mb-4">セット編集</h1>
+<div class="container mt-2">
+  <h2 class="mb-4">セット編集</h2>
 
   <% if @set.errors.any? %>
     <div class="alert alert-danger">
@@ -11,23 +11,23 @@
     </div>
   <% end %>
 
-  <p><strong>日付:</strong> <%= @set.workout.performed_on %></p>
-  <p><strong>種目:</strong> <%= @set.workout.exercise.name %></p>
+  <p class="mb-1"><strong>日付:</strong> <%= @set.workout.performed_on %></p>
+  <p class="mb-3"><strong>種目:</strong> <%= @set.workout.exercise.name %></p>
 
   <%= form_with model: @set, local: true do |f| %>
     <div class="mb-3">
-      <%= f.label :weight, "重量(kg)", class: "form-label" %>
+      <%= f.label :weight, "重量(kg)", class: "form-label fw-semibold" %>
       <%= f.number_field :weight, step: 0.5, class: "form-control" %>
     </div>
 
     <div class="mb-3">
-      <%= f.label :reps, "回数(回)", class: "form-label" %>
+      <%= f.label :reps, "回数(回)", class: "form-label fw-semibold" %>
       <%= f.number_field :reps, class: "form-control" %>
     </div>
 
-    <div class="d-flex gap-2">
-      <%= f.submit "更新", class: "btn btn-success" %>
-      <%= link_to "キャンセル", workout_path(@set.workout), class: "btn btn-secondary" %>
+    <div class="d-flex flex-column flex-sm-row gap-2">
+      <%= f.submit "更新", class: "btn btn-success flex-grow-1 flex-sm-auto" %>
+      <%= link_to "キャンセル", workout_path(@set.workout), class: "btn btn-secondary flex-grow-1 flex-sm-auto" %>
     </div>
   <% end %>
 </div>

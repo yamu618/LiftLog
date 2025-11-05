@@ -26,7 +26,7 @@ class WorkoutsController < ApplicationController
   def create
     @workout = current_user.workouts.new(workout_params)
     if @workout.save
-      redirect_to workouts_path, notice: "ワークアウトを作成しました"
+      redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを作成しました"
     else
       @exercises = current_user.exercises.includes(:category)
       @categories = Category.order(:id)

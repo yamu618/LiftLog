@@ -17,12 +17,12 @@
   <%= form_with model: @set, url: create_set_workout_path(@workout), local: true do |f| %>
     <div class="mb-3">
       <%= f.label :weight, "重量(kg)", class: "form-label" %>
-      <%= f.number_field :weight, step: 0.5, class: "form-control" %>
+      <%= f.number_field :weight, step: 0.5, value: nil, class: "form-control" %>
     </div>
 
     <div class="mb-3">
       <%= f.label :reps, "回数(回)", class: "form-label" %>
-      <%= f.number_field :reps, class: "form-control" %>
+      <%= f.number_field :reps, value: nil, class: "form-control" %>
     </div>
 
     <div class="d-flex gap-2">

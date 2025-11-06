@@ -33,4 +33,12 @@ class Workout < ApplicationRecord
   def total_weight
     workout_sets.sum { |s| s.weight * s.reps }
   end
+
+  def total_distance
+    workout_sets.sum(:distance)
+  end
+
+  def total_duration
+    workout_sets.sum(:duration)
+  end
 end

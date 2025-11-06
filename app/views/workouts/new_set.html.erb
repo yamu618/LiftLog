@@ -33,7 +33,7 @@
 
       <div class="mb-3">
         <%= f.label :reps, "回数(回)", class: "form-label" %>
-        <%= f.number_field :reps, value: nil, class: "form-control" %>
+        <%= f.number_field :reps, step: 1, value: nil, class: "form-control" %>
       </div>
     <% end %>
 

@@ -15,15 +15,27 @@
   <p class="mb-3"><strong>種目:</strong> <%= @set.workout.exercise.name %></p>
 
   <%= form_with model: @set, local: true do |f| %>
-    <div class="mb-3">
-      <%= f.label :weight, "重量(kg)", class: "form-label fw-semibold" %>
-      <%= f.number_field :weight, step: 0.5, class: "form-control" %>
-    </div>
+    <% if @workout.exercise.category.name == "有酸素" %>
+      <div class = "mb-3">
+        <%= f.label :duration, "時間(分)", class: "form-label" %>
+        <%= f.number_field :duration, step: 1, class: "form-control" %>
+      </div>
 
-    <div class="mb-3">
-      <%= f.label :reps, "回数(回)", class: "form-label fw-semibold" %>
-      <%= f.number_field :reps, class: "form-control" %>
-    </div>
+      <div class = "mb-3">
+        <%= f.label :duration, "距離(km)", class: "form-label" %>
+        <%= f.number_field :distance, step: 0.1, class: "form-control" %>
+      </div>
+    <% else %>
+      <div class="mb-3">
+        <%= f.label :weight, "重量(kg)", class: "form-label" %>
+        <%= f.number_field :weight, step: 0.1, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :reps, "回数(回)", class: "form-label" %>
+        <%= f.number_field :reps, step: 1, class: "form-control" %>
+      </div>
+    <% end %>
 
     <div class="d-flex flex-column flex-sm-row gap-2">
       <%= f.submit "更新", class: "btn btn-success flex-grow-1 flex-sm-auto" %>

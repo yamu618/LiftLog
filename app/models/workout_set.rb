@@ -22,7 +22,7 @@
 class WorkoutSet < ApplicationRecord
   belongs_to :workout
 
-  with_options if: -> { workout.exercise.category.name != "有酸素" } do 
+  with_options if: -> { workout.exercise.category.name != "有酸素" } do
     validates :weight, presence: true, numericality: { greater_than_or_equal_to: 0.0 }
     validates :reps, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   end

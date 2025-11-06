@@ -9,12 +9,12 @@
       <div class="card mb-2 shadow-sm">
         <div class="card-body p-2">
           <% if @workout.exercise.category.name == "有酸素" %>
-            <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex justify-content-start align-items-center gap-3 mb-2">
               <span class="fw-bold">時間: <%= set.duration %>分</span>
               <span class="fw-bold">距離: <%= set.distance %>km</span>
             </div>
           <% else %>
-            <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex justify-content-start align-items-center gap-3 mb-2">
               <span class="fw-bold">重量: <%= set.weight %>kg</span>
               <span class="fw-bold">回数: <%= set.reps %>回</span>
             </div>

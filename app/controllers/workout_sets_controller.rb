@@ -2,12 +2,15 @@ class WorkoutSetsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_workout_set, only: %i[edit update destroy]
 
-  def edit; end
+  def edit
+    @workout = @set.workout
+  end
 
   def update
     if @set.update(set_params)
       redirect_to workout_path(@set.workout), notice: "セットを更新しました"
     else
+      @workout = @set.workout
       render :edit, status: :unprocessable_entity
     end
   end
@@ -25,6 +28,6 @@ class WorkoutSetsController < ApplicationController
   end
 
   def set_params
-    params.require(:workout_set).permit(:weight, :reps)
+    params.require(:workout_set).permit(:weight, :reps, :duration, :distance)
   end
 end

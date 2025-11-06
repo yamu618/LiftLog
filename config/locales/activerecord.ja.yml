@@ -19,6 +19,8 @@ ja:
       workout_set:
         weight: 重量
         reps: 回数
+        duration: 時間
+        distance: 距離
     errors:
       models:
         user:

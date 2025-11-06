@@ -44,12 +44,12 @@ class ReportsController < ApplicationController
     this_week = current_user.workouts
       .joins(:workout_sets)
       .where(performed_on: Time.zone.today.beginning_of_week..Time.zone.today.end_of_week)
-      .sum('workout_sets.weight * workout_sets.reps')
+      .sum("workout_sets.weight * workout_sets.reps")
 
     last_week = current_user.workouts
       .joins(:workout_sets)
       .where(performed_on: 1.week.ago.beginning_of_week..1.week.ago.end_of_week)
-      .sum('workout_sets.weight * workout_sets.reps')
+      .sum("workout_sets.weight * workout_sets.reps")
 
     [this_week, last_week]
   end
@@ -58,12 +58,12 @@ class ReportsController < ApplicationController
     this_month = current_user.workouts
       .joins(:workout_sets)
       .where(performed_on: Time.zone.today.beginning_of_month..Time.zone.today.end_of_month)
-      .sum('workout_sets.weight * workout_sets.reps')
+      .sum("workout_sets.weight * workout_sets.reps")
 
     last_month = current_user.workouts
       .joins(:workout_sets)
       .where(performed_on: 1.month.ago.beginning_of_month..1.month.ago.end_of_month)
-      .sum('workout_sets.weight * workout_sets.reps')
+      .sum("workout_sets.weight * workout_sets.reps")
 
     [this_month, last_month]
   end

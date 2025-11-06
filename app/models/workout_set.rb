@@ -22,6 +22,13 @@
 class WorkoutSet < ApplicationRecord
   belongs_to :workout
 
-  validates :weight, presence: true, numericality: { greater_than_or_equal_to: 0.0 }
-  validates :reps, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+  with_options if: -> { workout.exercise.category.name != "有酸素" } do 
+    validates :weight, presence: true, numericality: { greater_than_or_equal_to: 0.0 }
+    validates :reps, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+  end
+
+  with_options if: -> { workout.exercise.category.name == "有酸素" } do
+    validates :duration, presence: true, numericality: { greater_than: 0, only_integer: true }
+    validates :distance, presence: true, numericality: { greater_than_or_equal_to: 0.0 }
+  end
 end

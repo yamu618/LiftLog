@@ -24,7 +24,7 @@ RSpec.describe "お問い合わせフォーム", type: :system do
 
   it "messageが空だと送信できない" do
     visit new_contact_path
-    
+
     fill_in "お問い合わせ内容（必須・1000文字以内）", with: ""
 
     click_button "送信する"

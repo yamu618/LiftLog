@@ -1,2 +1,40 @@
-<h1>Contacts#new</h1>
-<p>Find me in app/views/contacts/new.html.erb</p>
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <h2 class="mb-4 fw-bold">お問い合わせ</h2>
+
+      <div class="alert alert-info">
+        <p class="mb-1">
+          ご意見・ご要望・不具合報告・機能追加のご希望などがありましたら、こちらのフォームからお知らせください。
+        </p>
+        <p class="mb-0 small text-secondary">
+          ※返信が必要な場合はメールアドレスの入力をお願いします（任意）。
+        </p>
+      </div>
+
+      <%= form_with model: @contact, local: true do |f| %>
+        <div class="mb-3">
+          <%= f.label :name, "お名前（任意）", class: "form-label fw-semibold" %>
+          <%= f.text_field :name, class: "form-control", maxlength: 50 %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :email, "メールアドレス（任意）", class: "form-label fw-semibold" %>
+          <%= f.email_field :email, class: "form-control", placeholder: "例：example@example.com" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :message, "お問い合わせ内容（必須・1000文字以内）", class: "form-label fw-semibold" %>
+          <%= f.text_area :message, class: "form-control", rows: 8, required: true,
+              placeholder: "ご意見・ご要望・不具合などをご記入ください。" %>
+        </div>
+
+        <div class="text-end">
+          <%= f.submit "送信する", class: "btn btn-primary px-4" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

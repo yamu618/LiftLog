@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
   resources :workout_sets, only: %i[edit update destroy]
   resources :reports, only: %i[index]
+  resources :contacts, only: %i[new create]
 
   get "home/index"
 

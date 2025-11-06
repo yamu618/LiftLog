@@ -11,11 +11,11 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <%= render 'shared/header' %>
     <%= render "shared/flash_messages" %>
 
-    <main class="container">
+    <main class="flex-fill">
       <%= yield %>
     </main>
 

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "contacts/new"
+  get "contacts/create"
   get "reports/index"
   devise_for :users
   resources :exercises, only: %i[index edit create update destroy]

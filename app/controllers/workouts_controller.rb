@@ -9,7 +9,7 @@ class WorkoutsController < ApplicationController
                   current_user.workouts
                     .includes(exercise: :category, workout_sets: [])
                     .where(performed_on: @selected_date)
-                    .order("categories.name, exercises.name")
+                    .order(created_at: :asc)
                 else
                   []
                 end

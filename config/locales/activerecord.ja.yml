@@ -5,6 +5,7 @@ ja:
       exercise: 種目
       workout: ワークアウト
       workout_set: ワークアウトセット
+      contact: お問い合わせ
     attributes:
       user:
         username: ユーザー名
@@ -21,6 +22,10 @@ ja:
         reps: 回数
         duration: 時間
         distance: 距離
+      contact:
+        name: 名前
+        email: メールアドレス
+        message: お問い合わせ内容
     errors:
       models:
         user:

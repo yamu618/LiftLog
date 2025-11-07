@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 3, label: "ユーザー"
   permit_params :username, :email, :password, :password_confirmation
- 
+
   index do
     selectable_column
     id_column

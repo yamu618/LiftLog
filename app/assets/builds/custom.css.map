@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../javascript/custom.css"],
-  "sourcesContent": ["/* Bootstrap\u5909\u6570\u306E\u30AB\u30B9\u30BF\u30DE\u30A4\u30BA */\n:root {\n  --bs-primary: #007bff;\n  --bs-secondary: #6c757d;\n  --bs-success: #28a745;\n}\n\n/* \u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u56FA\u6709\u306E\u30B9\u30BF\u30A4\u30EB */\n.lift-log-header {\n  background: linear-gradient(135deg, var(--bs-primary), #0056b3);\n  color: white;\n  padding: 3rem 0;\n  margin-bottom: 2rem;\n}\n"],
-  "mappings": ";AACA;AACE,gBAAc;AACd,kBAAgB;AAChB,gBAAc;AAChB;AAGA,CAAC;AACC;AAAA,IAAY;AAAA,MAAgB,MAAM;AAAA,MAAE,IAAI,aAAa;AAAA,MAAE;AACvD,SAAO;AACP,WAAS,KAAK;AACd,iBAAe;AACjB;",
-  "names": []
-}

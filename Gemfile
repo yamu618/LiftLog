@@ -40,6 +40,9 @@ gem "bootsnap", require: false
 gem 'devise', '~> 4.9.4'
 gem 'devise-i18n', '~> 1.15'
 
+# 管理画面
+gem 'activeadmin', '~> 3.4'
+
 # UI/UX
 gem "hotwire-rails", '~> 0.1.3'
 # gem "tailwindcss-rails", '~> 4.3.0'

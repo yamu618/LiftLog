@@ -56,3 +56,4 @@ puts "✅ シードデータの作成が完了しました！"
 puts "👤 ユーザー: #{User.count}人"
 puts "📂 カテゴリー: #{Category.count}個"
 puts "🏋️‍♂️ 種目: #{Exercise.count}個"
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

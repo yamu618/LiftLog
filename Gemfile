@@ -40,6 +40,9 @@ gem "bootsnap", require: false
 gem 'devise', '~> 4.9.4'
 gem 'devise-i18n', '~> 1.15'
 
+# 管理画面
+gem 'activeadmin', '~> 3.4'
+
 # UI/UX
 gem "hotwire-rails", '~> 0.1.3'
 # gem "tailwindcss-rails", '~> 4.3.0'
@@ -47,6 +50,7 @@ gem "hotwire-rails", '~> 0.1.3'
 gem 'simple_calendar', '~> 3.1.0'
 gem 'chartkick', '~> 5.2.1'
 gem 'groupdate', '~> 6.5'
+gem 'sassc-rails', '~> 2.1'
 
 # 環境変数管理
 gem "dotenv-rails", '~> 3.1.8'

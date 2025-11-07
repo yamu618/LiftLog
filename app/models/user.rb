@@ -3,7 +3,6 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
-#  admin                  :boolean          default(FALSE), not null
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  remember_created_at    :datetime
@@ -38,5 +37,9 @@ class User < ApplicationRecord
         category_id: template.category_id
       )
     end
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[username id email created_at updated_at]
   end
 end

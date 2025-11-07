@@ -50,6 +50,7 @@ gem "hotwire-rails", '~> 0.1.3'
 gem 'simple_calendar', '~> 3.1.0'
 gem 'chartkick', '~> 5.2.1'
 gem 'groupdate', '~> 6.5'
+gem 'sassc-rails', '~> 2.1'
 
 # 環境変数管理
 gem "dotenv-rails", '~> 3.1.8'

@@ -5,6 +5,7 @@ class WorkoutsController < ApplicationController
 
   def index
     @selected_date = params[:date].present? ? Date.parse(params[:date]) : Time.zone.today
+    @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : @selected_date.beginning_of_month
     @workouts = if user_signed_in?
                   current_user.workouts
                     .includes(exercise: :category, workout_sets: [])

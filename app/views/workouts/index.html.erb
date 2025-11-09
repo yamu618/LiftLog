@@ -2,20 +2,11 @@
   <h2 class="mb-4"><%= @workout_title %></h2>
 
   <div class="mb-4">
-    <%= month_calendar(events: @all_workouts, attribute: :performed_on) do |date, workouts| %>
-      <% has_workout = workouts.any? %>
-      <% is_selected = date == @selected_date %>
-
-      <%= link_to workouts_path(date: date),
-          class: "d-block border rounded p-2 text-center text-decoration-none #{'bg-primary-subtle border-primary' if is_selected}",
-          style: "min-height: 80px; color: inherit;" do %>
-
-        <div class="fw-bold"><%= date.day %></div>
-
-        <% if has_workout %>
-          <div class="small text-success">●</div>
-        <% end %>
-      <% end %>
+    <%= month_calendar(events: @all_workouts, attribute: :performed_on, start_date: @start_date) do |date, workouts| %>
+      <%= render 'month_calendar', 
+          calendar: calendar, 
+          start_date: @start_date, 
+          selected_date: @selected_date %>
     <% end %>
   </div>
 

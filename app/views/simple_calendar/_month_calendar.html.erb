@@ -1,0 +1,42 @@
+<div class="simple-calendar">
+  <h5 class="mb-2"><%= @start_date.strftime("%Y年 %-m月") %></h5>
+
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+    <div class="btn-group btn-group-sm mb-1">
+      <%= link_to "先月", workouts_path(start_date: @start_date.prev_month.beginning_of_month, date: @selected_date), class: "btn btn-outline-primary" %>
+      <%= link_to "今月", workouts_path(start_date: Time.zone.today.beginning_of_month, date: @selected_date), class: "btn btn-outline-primary" %>
+      <%= link_to "次月", workouts_path(start_date: @start_date.next_month.beginning_of_month, date: @selected_date), class: "btn btn-outline-primary" %>
+    </div>
+
+    <%= link_to "今日", workouts_path(start_date: Time.zone.today.beginning_of_month, date: Time.zone.today), class: "btn btn-outline-success btn-sm mb-1" %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered text-center mb-0">
+      <thead>
+        <tr>
+          <% date_range.slice(0,7).each do |day| %>
+            <th class="p-1"><%= t('date.abbr_day_names')[day.wday] %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% date_range.each_slice(7) do |week| %>
+          <tr>
+            <% week.each do |day| %>
+              <td class="p-1 <%= 'bg-light text-muted' if day.month != @start_date.month %>">
+                <%= link_to workouts_path(date: day, start_date: @start_date.beginning_of_month),
+                    class: "d-block text-decoration-none #{'bg-primary-subtle border-primary' if day == @selected_date}" do %>
+                  <div class="fw-bold"><%= day.day %></div>
+                  <% if calendar.sorted_events_for(day).any? %>
+                    <div class="small text-success">●</div>
+                  <% end %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

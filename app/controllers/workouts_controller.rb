@@ -20,6 +20,7 @@ class WorkoutsController < ApplicationController
 
   def new
     @workout = current_user.workouts.new(performed_on: params[:date] || Time.zone.today)
+    @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
     @exercises = current_user.exercises.includes(:category)
     @categories = Category.order(:id)
   end
@@ -29,6 +30,7 @@ class WorkoutsController < ApplicationController
     if @workout.save
       redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを作成しました"
     else
+      @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
       @exercises = current_user.exercises.includes(:category)
       @categories = Category.order(:id)
       render :new, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class WorkoutsController < ApplicationController
 
   def destroy
     @workout.destroy
+    
     redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを削除しました", status: :see_other
   end
 

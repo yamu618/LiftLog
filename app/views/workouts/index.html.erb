@@ -46,6 +46,6 @@
   </div>
 
   <div class="mt-3">
-    <%= link_to "ワークアウト追加", new_workout_path(date: @selected_date), class: "btn btn-success w-100 w-md-auto" %>
+    <%= link_to "ワークアウト追加", new_workout_path(date: @selected_date, start_date: @start_date.beginning_of_month), class: "btn btn-success w-100 w-md-auto" %>
   </div>
 </div>

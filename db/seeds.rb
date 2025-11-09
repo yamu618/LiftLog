@@ -56,13 +56,3 @@ puts "✅ シードデータの作成が完了しました！"
 puts "👤 ユーザー: #{User.count}人"
 puts "📂 カテゴリー: #{Category.count}個"
 puts "🏋️‍♂️ 種目: #{Exercise.count}個"
-
-AdminUser.find_or_create_by!(email: 'admin@example.com') do |admin|
-  admin.password = 'password'
-  admin.password_confirmation = 'password'
-end if Rails.env.development?
-
-AdminUser.find_or_create_by!(email: ENV['ADMIN_EMAIL']) do |admin|
-  admin.password = ENV['ADMIN_PASSWORD']
-  admin.password_confirmation = ENV['ADMIN_PASSWORD']
-end if Rails.env.production?

@@ -4,7 +4,6 @@
   <div class="mb-4">
     <%= month_calendar(events: @all_workouts, attribute: :performed_on, start_date: @start_date) do |date, workouts| %>
       <%= render 'month_calendar', 
-          calendar: calendar, 
           start_date: @start_date, 
           selected_date: @selected_date %>
     <% end %>

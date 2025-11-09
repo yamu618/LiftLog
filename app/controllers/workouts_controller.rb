@@ -14,7 +14,7 @@ class WorkoutsController < ApplicationController
                   []
                 end
     @all_workouts = user_signed_in? ? current_user.workouts : []
-    @workout_title = user_signed_in? ? "#{current_user.username}のワークアウト" : "LiftLogへようこそ！"
+    @workout_title = user_signed_in? ? "#{current_user.username}のワークアウト" : "ゲストのワークアウト"
   end
 
   def new

@@ -2,7 +2,7 @@ import { Application } from "@hotwired/stimulus"
 
 const application = Application.start()
 
-application.debug = true // デバッグON（確認しやすい）
+application.debug = true
 window.Stimulus = application
 
 export { application }

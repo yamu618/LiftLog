@@ -13,7 +13,7 @@ class WorkoutsController < ApplicationController
                 else
                   []
                 end
-    @all_workouts = current_user.workouts
+    @all_workouts = user_signed_in? ? current_user.workouts : []
     @workout_title = user_signed_in? ? "#{current_user.username}のワークアウト" : "LiftLogへようこそ！"
   end
 

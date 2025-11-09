@@ -1,43 +1,56 @@
 <div class="container mt-2">
   <h2 class="mb-4"><%= @workout_title %></h2>
 
-  <%= form_with url: workouts_path, method: :get, local: true, class: "row g-2 mb-4" do %>
-    <div class="col-12 col-md-4">
-      <%= label_tag :date, "日付", class: "form-label fw-semibold" %>
-      <%= date_field_tag :date, @selected_date, class: "form-control w-100" %>
-    </div>
+  <div class="mb-4">
+    <%= month_calendar(events: @all_workouts, attribute: :performed_on) do |date, workouts| %>
+      <% has_workout = workouts.any? %>
+      <% is_selected = date == @selected_date %>
 
-    <div class="col-12 col-md-auto d-flex align-items-end mt-2 mt-md-0">
-      <%= submit_tag "更新", class: "btn btn-primary w-100" %>
-    </div>
-  <% end %>
+      <%= link_to workouts_path(date: date),
+          class: "d-block border rounded p-2 text-center text-decoration-none #{'bg-primary-subtle border-primary' if is_selected}",
+          style: "min-height: 80px; color: inherit;" do %>
+
+        <div class="fw-bold"><%= date.day %></div>
+
+        <% if has_workout %>
+          <div class="small text-success">●</div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <h5 class="mb-3"><%= @selected_date.strftime("%Y年%m月%d日") %> の記録</h5>
 
   <div>
-    <% @workouts.each do |workout| %>
-      <div class="card mb-2 shadow-sm">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-1 fw-bold"><%= workout.exercise.name %></h6>
+    <% if @workouts.any? %>
+      <% @workouts.each do |workout| %>
+        <div class="card mb-2 shadow-sm">
+          <div class="card-body p-2">
+            <h6 class="card-title mb-1 fw-bold"><%= workout.exercise.name %></h6>
 
-          <div class="d-flex flex-wrap gap-2 mb-2 small text-secondary">
-            <span><strong>カテゴリ:</strong> <%= workout.exercise.category.name %></span>
-            <span><strong>セット:</strong> <%= workout.workout_sets.count %></span>
+            <div class="d-flex flex-wrap gap-2 mb-2 small text-secondary">
+              <span><strong>カテゴリ:</strong> <%= workout.exercise.category.name %></span>
+              <span><strong>セット:</strong> <%= workout.workout_sets.count %></span>
 
-            <% if workout.exercise.category.name == "有酸素" %>
-              <span><strong>総距離:</strong> <%= workout.total_distance %> km</span>
-              <span><strong>合計時間:</strong> <%= workout.total_duration %> 分</span>
-            <% else %>
-              <span><strong>総重量:</strong> <%= workout.total_weight %> kg</span>
-            <% end %>
-          </div>
+              <% if workout.exercise.category.name == "有酸素" %>
+                <span><strong>総距離:</strong> <%= workout.total_distance %> km</span>
+                <span><strong>合計時間:</strong> <%= workout.total_duration %> 分</span>
+              <% else %>
+                <span><strong>総重量:</strong> <%= workout.total_weight %> kg</span>
+              <% end %>
+            </div>
 
-          <div class="d-flex justify-content-end gap-1">
-            <%= link_to "詳細", workout_path(workout), class: "btn btn-sm btn-primary" %>
-            <%= link_to "削除", workout_path(workout),
-                        data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
-                        class: "btn btn-sm btn-danger" %>
+            <div class="d-flex justify-content-end gap-1">
+              <%= link_to "詳細", workout_path(workout), class: "btn btn-sm btn-primary" %>
+              <%= link_to "削除", workout_path(workout),
+                          data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
+                          class: "btn btn-sm btn-danger" %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
+    <% else %>
+      <p>この日の記録はありません</p>
     <% end %>
   </div>
 

@@ -31,8 +31,8 @@
             </div>
 
             <div class="d-flex justify-content-end gap-1">
-              <%= link_to "詳細", workout_path(workout), class: "btn btn-sm btn-primary" %>
-              <%= link_to "削除", workout_path(workout),
+              <%= link_to "詳細", workout_path(workout, start_date: @start_date.beginning_of_month), class: "btn btn-sm btn-primary" %>
+              <%= link_to "削除", workout_path(workout, start_date: @start_date.beginning_of_month),
                           data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
                           class: "btn btn-sm btn-danger" %>
             </div>

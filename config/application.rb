@@ -27,6 +27,6 @@ module Myapp
     config.i18n.default_locale = :ja
     config.i18n.available_locales = [:ja, :en, :de]
     config.time_zone = "Asia/Tokyo"
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :utc
   end
 end

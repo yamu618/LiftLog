@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      category: 部位
       exercise: 種目
       workout: ワークアウト
       workout_set: ワークアウトセット
@@ -19,20 +20,19 @@ ja:
       workout:
         exercise: 種目
         performed_on: トレーニング日
+        total_weight: 総重量
       workout_set:
         weight: 重量
         reps: 回数
         duration: 時間
         distance: 距離
+        created_at: 作成日
+        updated_at: 更新日
       contact:
         name: 名前
         email: メールアドレス
         message: お問い合わせ内容
         created_at: 作成日
-      admin_user:
-        email: メールアドレス
-        created_at: 作成日
-        updated_at: 更新日
     errors:
       models:
         user:

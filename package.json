@@ -13,6 +13,7 @@
     "@hotwired/turbo-rails": "^8.0.18",
     "chart.js": "^4.5.1",
     "chartkick": "^5.0.1",
+    "highcharts": "^12.4.0",
     "sass": "^1.0.0"
   }
 }

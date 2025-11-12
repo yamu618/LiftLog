@@ -31,4 +31,13 @@ class WorkoutSet < ApplicationRecord
     validates :duration, presence: true, numericality: { greater_than: 0, only_integer: true }
     validates :distance, presence: true, numericality: { greater_than_or_equal_to: 0.0 }
   end
+
+  after_save :update_workout_total_weight
+  after_destroy :update_workout_total_weight
+
+  private
+
+  def update_workout_total_weight
+    workout.update_column(:total_weight, workout.workout_sets.sum { |s| s.weight * s.reps })
+  end
 end

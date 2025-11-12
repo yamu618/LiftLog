@@ -4,12 +4,14 @@ class WorkoutSetsController < ApplicationController
 
   def edit
     @workout = @set.workout
+    @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
   end
 
   def update
     if @set.update(set_params)
       redirect_to workout_path(@set.workout), notice: "セットを更新しました"
     else
+      @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
       @workout = @set.workout
       render :edit, status: :unprocessable_entity
     end

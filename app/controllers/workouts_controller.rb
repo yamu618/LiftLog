@@ -38,6 +38,7 @@ class WorkoutsController < ApplicationController
   end
 
   def show
+    @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
     @exercise_name = @workout.exercise.name
     @sets = @workout.workout_sets.order(:id)
   end

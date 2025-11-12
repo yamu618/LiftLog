@@ -19,13 +19,13 @@ class ReportsController < ApplicationController
 
     if params[:exercise_id].present?
       @selected_exercise = current_user.exercises.find_by(id: params[:exercise_id])
-      if @selected_exercise
-        @chart_data = @selected_exercise.workouts
-                                        .group_by_month(:performed_on, last: 12, time_zone: "Tokyo")
-                                        .sum(:total_weight)
-      else
-        @chart_data = {}
-      end
+      @chart_data = if @selected_exercise
+                      @selected_exercise.workouts
+                        .group_by_month(:performed_on, last: 12, time_zone: "Tokyo")
+                        .sum(:total_weight)
+                    else
+                      {}
+                    end
     else
       @selected_date = nil
       @chart_data = {}

@@ -38,6 +38,6 @@ class WorkoutSet < ApplicationRecord
   private
 
   def update_workout_total_weight
-    workout.update_column(:total_weight, workout.workout_sets.sum { |s| s.weight * s.reps })
+    workout.update(total_weight: workout.workout_sets.sum { |s| s.weight * s.reps })
   end
 end

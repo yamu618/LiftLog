@@ -45,7 +45,7 @@ class WorkoutsController < ApplicationController
 
   def destroy
     @workout.destroy
-    
+
     redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを削除しました", status: :see_other
   end
 

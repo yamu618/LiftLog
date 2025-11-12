@@ -12,6 +12,24 @@ class ReportsController < ApplicationController
     @week_weight_diff = @this_week_weight - @last_week_weight
     @this_month_weight, @last_month_weight = month_weight_sums
     @month_weight_diff = @this_month_weight - @last_month_weight
+
+    @categories = Category.all.order(:id)
+    @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
+    @exercises = current_user.exercises.where(category: @selected_category)
+
+    if params[:exercise_id].present?
+      @selected_exercise = current_user.exercises.find_by(id: params[:exercise_id])
+      if @selected_exercise
+        @chart_data = @selected_exercise.workouts
+                                        .group_by_month(:performed_on, last: 12, time_zone: "Tokyo")
+                                        .sum(:total_weight)
+      else
+        @chart_data = {}
+      end
+    else
+      @selected_date = nil
+      @chart_data = {}
+    end
   end
 
   private

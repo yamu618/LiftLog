@@ -6,24 +6,24 @@
       <strong>トレーニング日数</strong>
     </div>
     <div class="card-body">
-      <div class="row text-center">
-        <div class="col-12 col-md-4 mb-3 mb-md-0">
-          <p class="text-muted mb-1">総トレーニング日数</p>
-          <h3 class="fw-bold"><%= @total_days %> 日</h3>
+      <div class="d-flex justify-content-center flex-nowrap overflow-auto text-center">
+        <div class="p-2 flex-shrink-0" style="min-width: 120px;">
+          <p class="text-muted mb-1 fs-6">総日数</p>
+          <h3 class="fw-bold fs-5"><%= @total_days %> 日</h3>
         </div>
 
-        <div class="col-12 col-md-4 mb-3 mb-md-0">
-          <p class="text-muted mb-1">今週</p>
-          <h3 class="fw-bold"><%= @this_week_days %> 日</h3>
-          <p class="<%= @week_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
+        <div class="p-2 flex-shrink-0" style="min-width: 120px;">
+          <p class="text-muted mb-1 fs-6">今週</p>
+          <h3 class="fw-bold fs-5"><%= @this_week_days %> 日</h3>
+          <p class="<%= @week_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %> fs-6">
             （前週比 <%= @week_days_diff >= 0 ? '+' : '' %><%= @week_days_diff %>）
           </p>
         </div>
 
-        <div class="col-12 col-md-4">
-          <p class="text-muted mb-1">今月</p>
-          <h3 class="fw-bold"><%= @this_month_days %> 日</h3>
-          <p class="<%= @month_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
+        <div class="p-2 flex-shrink-0" style="min-width: 120px;">
+          <p class="text-muted mb-1 fs-6">今月</p>
+          <h3 class="fw-bold fs-5"><%= @this_month_days %> 日</h3>
+          <p class="<%= @month_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %> fs-6">
             （前月比 <%= @month_days_diff >= 0 ? '+' : '' %><%= @month_days_diff %>）
           </p>
         </div>
@@ -33,26 +33,51 @@
 
   <div class="card shadow-sm">
     <div class="card-header bg-success text-white">
-      <strong>総挙上重量</strong>
+      <strong>総重量レポート（月別）</strong>
     </div>
     <div class="card-body">
-      <div class="row text-center">
-        <div class="col-12 col-md-6 mb-3 mb-md-0">
-          <p class="text-muted mb-1">今週</p>
-          <h3 class="fw-bold"><%= number_with_delimiter(@this_week_weight.round) %> kg</h3>
-          <p class="<%= @week_weight_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
-            （前週比 <%= @week_weight_diff >= 0 ? '+' : '' %><%= number_with_delimiter(@week_weight_diff.round) %> kg）
-          </p>
-        </div>
+      <ul class="nav nav-tabs mb-3 flex-wrap">
+        <% @categories.reject { |c| c.name == "有酸素" }.each do |category| %>
+          <li class="nav-item">
+            <%= link_to category.name,
+                        reports_path(category_id: category.id),
+                        class: "nav-link #{'active' if category == @selected_category}",
+                        data: { turbo_frame: "_top" } %>
+          </li>
+        <% end %>
+      </ul>
 
-        <div class="col-12 col-md-6">
-          <p class="text-muted mb-1">今月</p>
-          <h3 class="fw-bold"><%= number_with_delimiter(@this_month_weight.round) %> kg</h3>
-          <p class="<%= @month_weight_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
-            （前月比 <%= @month_weight_diff >= 0 ? '+' : '' %><%= number_with_delimiter(@month_weight_diff.round) %> kg）
-          </p>
-        </div>
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <% @exercises.each do |exercise| %>
+          <%= link_to exercise.name,
+                      reports_path(exercise_id: exercise.id, category_id: @selected_category.id),
+                      class: "btn btn-outline-primary btn-sm",
+                      data: { turbo_frame: "chart" } %>
+        <% end %>
       </div>
+
+      <%= turbo_frame_tag "chart" do %>
+        <% if @chart_data.present? %>
+          <%= line_chart @chart_data,
+                loading: "読み込み中です...",
+                height: "250px",
+                library: { 
+                  title: { text: "#{@selected_exercise.name}の総重量推移" },
+                  yAxis: { title: { text: "総重量(kg)" } },
+                  responsive: {
+                    rules: [{
+                      condition: { maxWidth: 500 },
+                      chartOptions: { legend: { enabled: false },
+                                      yAxis: { labels: { style: { fontSize: '10px' } } } }
+                          }]
+                        }
+                      } %>
+        <% else %>
+          <p class="text-muted text-center mb-0">
+            種目を選択するとグラフが表示されます。
+          </p>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

@@ -38,13 +38,14 @@ class WorkoutsController < ApplicationController
   end
 
   def show
+    @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
     @exercise_name = @workout.exercise.name
     @sets = @workout.workout_sets.order(:id)
   end
 
   def destroy
     @workout.destroy
-    
+
     redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを削除しました", status: :see_other
   end
 

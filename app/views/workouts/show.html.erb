@@ -32,7 +32,7 @@
   </div>
 
   <div class="mt-3 d-flex flex-column flex-sm-row gap-2">
-    <%= link_to "セット追加", new_set_workout_path(@workout), class: "btn btn-success flex-grow-1 flex-sm-auto" %>
+    <%= link_to "セット追加", new_set_workout_path(@workout, start_date: @start_date.beginning_of_month), class: "btn btn-success flex-grow-1 flex-sm-auto" %>
     <%= link_to "ワークアウト一覧に戻る", workouts_path(date: @workout.performed_on), class: "btn btn-secondary flex-grow-1 flex-sm-auto" %>
   </div>
 </div>

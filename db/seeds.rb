@@ -12,8 +12,8 @@ if Rails.env.development?
       username: "テストユーザー",
       email: "testuser@example.com",
       password: "password",
-      password_confirmation: "password"
-      admin: "true"
+      password_confirmation: "password",
+      admin: true
     )
   puts "#{user.username} を作成しました"
 end

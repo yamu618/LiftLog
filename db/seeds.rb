@@ -1,29 +1,24 @@
-puts "🌱 シードデータの作成を開始します..."
+puts "シードデータの作成を開始"
 
-# === 開発環境のみ処理 ===
 if Rails.env.development?
-  puts "既存データをクリアしています..."
+  puts "既存データをクリア"
   Workout.destroy_all
   Exercise.destroy_all
   Category.destroy_all
   User.destroy_all
 
-  puts "開発環境用のテストユーザーを作成しています..."
-  users = []
-  3.times do |i|
-    user = User.create!(
-      username: "ユーザー#{i + 1}",
-      email: "user#{i + 1}@example.com",
+  puts "開発環境用のテストユーザーを作成"
+  user = User.create!(
+      username: "テストユーザー",
+      email: "testuser@example.com",
       password: "password",
       password_confirmation: "password"
+      admin: "true"
     )
-    users << user
-    puts "#{user.username} を作成しました"
-  end
+  puts "#{user.username} を作成しました"
 end
 
-# === カテゴリーと種目作成 ===
-puts "カテゴリーと種目を作成しています..."
+puts "カテゴリーと種目を作成"
 
 exercise_data = {
   "胸" => ["ベンチプレス", "チェストプレス", "インクラインベンチプレス", "ダンベルプレス", "ダンベルフライ", "ケーブルフライ", "ディップス"],
@@ -52,7 +47,14 @@ exercise_data.each do |category_name, exercise_names|
   end
 end
 
-puts "✅ シードデータの作成が完了しました！"
-puts "👤 ユーザー: #{User.count}人"
-puts "📂 カテゴリー: #{Category.count}個"
-puts "🏋️‍♂️ 種目: #{Exercise.count}個"
+if Rails.env.production?
+  admin_email = ENV['ADMIN_EMAIL']
+  admin_password = ENV['ADMIN_PASSWORD']
+
+  User.find_or_create_by!(email: admin_email) do |user|
+    user.username = 'admin'
+    user.password = admin_password
+    user.password_confirmation = admin_password
+    user.admin = true
+  end
+end

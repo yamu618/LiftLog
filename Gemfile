@@ -42,9 +42,11 @@ gem "importmap-rails"
 # 認証
 gem 'devise', '~> 4.9.4'
 gem 'devise-i18n', '~> 1.15'
+gem 'cancancan', '~> 3.6'
 
 # 管理画面
 # gem 'activeadmin', '~> 3.4'
+gem 'rails_admin', '~> 3.3'
 
 # UI/UX
 gem "hotwire-rails", '~> 0.1.3'
@@ -97,3 +99,4 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+gem "sassc-rails"

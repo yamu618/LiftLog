@@ -49,15 +49,35 @@ class WorkoutsController < ApplicationController
     redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを削除しました", status: :see_other
   end
 
+  def show
+    @sets = @workout.workout_sets.order(:id)
+  end
+
   def new_set
-    @set = @workout.workout_sets.new(weight: 0, reps: 0)
+    @sets = [@workout.workout_sets.build(weight: 0, reps: 0, duration: 0, distance: 0)]
   end
 
   def create_set
-    @set = @workout.workout_sets.new(set_params)
-    if @set.save
-      redirect_to workout_path(@workout), notice: "セットを追加しました"
+    @sets = []
+    success = true
+
+    if params[:workout_sets].present?
+      params[:workout_sets].each do |_i, set_attr|
+        permitted = set_attr.permit(:weight, :reps, :duration, :distance)
+        next if permitted.values.all?(&:blank?)
+
+        set = @workout.workout_sets.build(permitted)
+        success &&= set.valid?
+        @sets << set
+      end
+    end
+
+    if success && @sets.any?
+      @sets.each(&:save!)
+      redirect_to workout_path(@workout), notice: "#{@sets.size}件のセットを追加しました"
     else
+      flash.now[:alert] = "エラーが発生しました。重量と回数は0以上で入力してください。"
+      @sets = [@workout.workout_sets.build(weight: 0, reps: 0, duration: 0, distance: 0)] if @sets.blank?
       render :new_set, status: :unprocessable_entity
     end
   end
@@ -70,9 +90,5 @@ class WorkoutsController < ApplicationController
 
   def workout_params
     params.require(:workout).permit(:exercise_id, :performed_on)
-  end
-
-  def set_params
-    params.require(:workout_set).permit(:weight, :reps, :duration, :distance)
   end
 end

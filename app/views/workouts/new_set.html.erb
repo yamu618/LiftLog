@@ -1,45 +1,65 @@
-<div class="container mt-2">
-  <h2 class="mb-4">セット追加</h1>
+<div class="container mt-2" data-controller="sets">
+  <h2 class="mb-4">セット追加</h2>
 
-  <% if @set.errors.any? %>
-    <div class="alert alert-danger">
-      <ul class="mb-0">
-        <% @set.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+  <%= form_with url: create_set_workout_path(@workout), method: :post, data: { turbo: false } do |f| %>
+    <div data-sets-target="container">
+      <% @sets.each_with_index do |set, i| %>
+        <div class="d-flex gap-2 mb-2 set-row">
+          <% if @workout.exercise.category.name == "有酸素" %>
+            <div class="input-group">
+              <%= number_field_tag "workout_sets[#{i}][duration]", set.duration, step: 1, value: nil, min: 0, class: "form-control", placeholder: "時間" %>
+              <span class="input-group-text">分</span>
+            </div>
+            <div class="input-group">
+              <%= number_field_tag "workout_sets[#{i}][distance]", set.distance, step: 0.1, value: nil, min: 0, class: "form-control", placeholder: "距離" %>
+              <span class="input-group-text">km</span>
+            </div>
+          <% else %>
+            <div class="input-group">
+              <%= number_field_tag "workout_sets[#{i}][weight]", set.weight, step: 0.1, value: nil, min: 0, class: "form-control", placeholder: "重量" %>
+              <span class="input-group-text">kg</span>
+            </div>
+            <div class="input-group">
+              <%= number_field_tag "workout_sets[#{i}][reps]", set.reps, step: 1, value: nil, min: 0, class: "form-control", placeholder: "回数" %>
+              <span class="input-group-text">回</span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
 
-  <p><strong>日付:</strong> <%= @workout.performed_on %></p>
-  <p><strong>種目:</strong> <%= @workout.exercise.name %></p>
-
-  <%= form_with model: @set, url: create_set_workout_path(@workout), local: true do |f| %>
-    <% if @workout.exercise.category.name == "有酸素" %>
-      <div class = "mb-3">
-        <%= f.label :duration, "時間(分)", class: "form-label" %>
-        <%= f.number_field :duration, step: 1, value: nil, class: "form-control" %>
+    <template data-sets-target="template">
+      <div class="d-flex gap-2 mb-2 set-row">
+        <% if @workout.exercise.category.name == "有酸素" %>
+          <div class="input-group">
+            <input type="number" name="workout_sets[__INDEX__][duration]" step="1" min="0" class="form-control" placeholder="時間">
+            <span class="input-group-text">分</span>
+          </div>
+          <div class="input-group">
+            <input type="number" name="workout_sets[__INDEX__][distance]" step="0.1" min="0" class="form-control" placeholder="距離">
+            <span class="input-group-text">km</span>
+          </div>
+        <% else %>
+          <div class="input-group">
+            <input type="number" name="workout_sets[__INDEX__][weight]" step="0.1" min="0" class="form-control" placeholder="重量">
+            <span class="input-group-text">kg</span>
+          </div>
+          <div class="input-group">
+            <input type="number" name="workout_sets[__INDEX__][reps]" step="1" min="0" class="form-control" placeholder="回数">
+            <span class="input-group-text">回</span>
+          </div>
+        <% end %>
       </div>
+    </template>
 
-      <div class = "mb-3">
-        <%= f.label :duration, "距離(km)", class: "form-label" %>
-        <%= f.number_field :distance, step: 0.1, value: nil, class: "form-control" %>
-      </div>
-    <% else %>
-      <div class="mb-3">
-        <%= f.label :weight, "重量(kg)", class: "form-label" %>
-        <%= f.number_field :weight, step: 0.1, value: nil, class: "form-control" %>
-      </div>
+    <div class="mt-3">
+      <button type="button", class="btn btn-outline-primary" data-action="sets#add">＋ セットを追加</button>
+      <button type="button", class="btn btn-outline-danger ms-2" data-action="sets#remove">－ セットを削除</button>
+    </div>
 
-      <div class="mb-3">
-        <%= f.label :reps, "回数(回)", class: "form-label" %>
-        <%= f.number_field :reps, step: 1, value: nil, class: "form-control" %>
-      </div>
-    <% end %>
-
-    <div class="d-flex gap-2">
+    <div class="mt-4">
       <%= f.submit "登録", class: "btn btn-success" %>
-      <%= link_to "キャンセル", workout_path(@workout), class: "btn btn-secondary" %>
+      <%= link_to "キャンセル", workout_path(@workout), class: "btn btn-secondary ms-2" %>
     </div>
   <% end %>
 </div>

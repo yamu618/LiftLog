@@ -1,10 +1,12 @@
 <header class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-  <div class="container-fluid">
-    <%= link_to root_path, class: "navbar-brand" do %>
-      <strong class="text-primary">LiftLog</strong>
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+
+    <%= link_to root_path, class: "d-flex align-items-center text-decoration-none" do %>
+      <img src="<%= asset_path('logo.png') %>" alt="アイコン" width="32" height="32" class="me-2">
+      <strong class="text-primary m-0">LiftLog</strong>
     <% end %>
 
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
       <% if user_signed_in? %>
         <% if current_user.try(:admin?) %>
           <%= link_to "管理者ログイン", rails_admin_path, class: "btn btn-sm btn-outline-warning" %>
@@ -17,9 +19,10 @@
                       data: { turbo_method: :delete, turbo_confirm: "ログアウトしますか？" },
                       class: "btn btn-sm btn-outline-danger" %>
       <% else %>
-        <%= link_to "新規会員登録", new_user_registration_path, class: "btn btn-outline-primary" %>
-        <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary" %>
+        <%= link_to "新規会員登録", new_user_registration_path, class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to "ログイン", new_user_session_path, class: "btn btn-sm btn-primary" %>
       <% end %>
     </div>
+
   </div>
 </header>

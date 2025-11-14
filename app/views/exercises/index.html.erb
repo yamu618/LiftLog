@@ -7,7 +7,7 @@
         新しい種目を追加
       </div>
       <div class="card-body p-2">
-        <%= render partial: "form", locals: { exercise: Exercise.new(category: @selected_category) } %>
+        <%= render partial: "add_form", locals: { exercise: Exercise.new(category: @selected_category) } %>
       </div>
     </div>
   </div>
@@ -24,18 +24,7 @@
 
   <div class="list-group">
     <% @exercises.each do |exercise| %>
-      <div class="list-group-item d-flex justify-content-between align-items-center">
-        <span><%= exercise.name %></span>
-        <% if exercise.persisted? %>
-          <div class="btn-group btn-group-sm">
-            <%= link_to "編集", edit_exercise_path(exercise), class: "btn btn-sm btn-primary" %>
-            <%= button_to "削除", exercise_path(exercise),
-                  method: :delete,
-                  data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
-                  class: "btn btn-sm btn-danger" %>
-          </div>
-        <% end %>
-      </div>
+      <%= render partial: "exercise", locals: {exercise: exercise} %>
     <% end %>
   </div>
 </div>

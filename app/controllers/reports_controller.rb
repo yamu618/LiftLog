@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
 
     @categories = Category.all.order(:id)
     @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
-    @exercises = current_user.exercises.where(category: @selected_category)
+    @exercises = current_user.exercises.where(category: @selected_category).order(:name)
 
     if params[:exercise_id].present?
       @selected_exercise = current_user.exercises.find_by(id: params[:exercise_id])

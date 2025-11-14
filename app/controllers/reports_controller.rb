@@ -26,9 +26,11 @@ class ReportsController < ApplicationController
                     else
                       {}
                     end
+      @chart_data_rounded = @chart_data.transform_values { |v| v.round(2) }
     else
       @selected_date = nil
       @chart_data = {}
+      @chart_data_rounded = @chart_data
     end
   end
 

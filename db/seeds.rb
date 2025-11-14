@@ -9,8 +9,8 @@ if Rails.env.development?
 
   puts "開発環境用のテストユーザーを作成"
   user = User.create!(
-      username: "テストユーザー",
-      email: "testuser@example.com",
+      username: "admin",
+      email: "testadmin@example.com",
       password: "password",
       password_confirmation: "password",
       admin: true
@@ -22,10 +22,11 @@ puts "カテゴリーと種目を作成"
 
 exercise_data = {
   "胸" => ["ベンチプレス", "チェストプレス", "インクラインベンチプレス", "ダンベルプレス", "ダンベルフライ", "ケーブルフライ", "ディップス"],
-  "背中" => ["デッドリフト", "ラットプルダウン", "バーベルローイング", "ダンベルローイング", "マシンローイング", "懸垂", "バックエクステンション"],
+  "背" => ["デッドリフト", "ラットプルダウン", "バーベルローイング", "ダンベルローイング", "マシンローイング", "懸垂", "バックエクステンション"],
   "脚" => ["スクワット", "レッグプレス", "レッグエクステンション", "レッグカール"],
   "肩" => ["ショルダープレス", "サイドレイズ", "フロントレイズ"],
   "腕" => ["バーベルカール", "ダンベルカール", "トライセップスエクステンション", "ハンマーカール", "ケーブルプッシュダウン", "ケーブルカール"],
+  "腹" => ["クランチ", "レッグレイズ", "ツイストクランチ", "ツイストレッグレイズ"],
   "有酸素" => ["ウォーキング", "ランニング", "エアロバイク", "クロストレーナー"]
 }
 
@@ -35,7 +36,6 @@ exercises = []
 exercise_data.each do |category_name, exercise_names|
   category = Category.find_or_create_by!(name: category_name)
   categories << category
-  puts "カテゴリー「#{category.name}」を作成しました"
 
   exercise_names.each do |exercise_name|
     exercise = Exercise.find_or_create_by!(
@@ -43,7 +43,6 @@ exercise_data.each do |category_name, exercise_names|
       category: category
     )
     exercises << exercise
-    puts "  種目「#{exercise.name}」を作成しました"
   end
 end
 

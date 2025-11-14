@@ -3,7 +3,7 @@ class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[edit update destroy]
 
   def index
-    @categories = Category.all
+    @categories = Category.all.order(:id)
     @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
     @exercises = current_user.exercises.where(category: @selected_category).order(:name)
   end

@@ -17,33 +17,22 @@
       <%= f.date_field :performed_on, class: "form-control" %>
     </div>
 
-    <ul class="nav nav-tabs mb-2" id="categoryTab">
-      <% @categories.each_with_index do |category, index| %>
+    <ul class="nav nav-tabs mb-2">
+      <% @categories.each do |category| %>
         <li class="nav-item">
-          <button class="nav-link <%= 'active' if index == 0 %> py-2" 
-                  id="tab-<%= category.id %>" 
-                  data-bs-toggle="tab" 
-                  data-bs-target="#category-<%= category.id %>" 
-                  type="button" role="tab">
-            <%= category.name %>
-          </button>
+          <%= link_to category.name,
+                      new_workout_path(category_id: category.id, performed_on: @workout.performed_on),
+                      class: "nav-link #{'active' if category == @selected_category}" %>
         </li>
       <% end %>
     </ul>
 
-    <div class="tab-content mb-3">
-      <% @categories.each_with_index do |category, index| %>
-        <div class="tab-pane fade <%= 'show active' if index == 0 %>" 
-             id="category-<%= category.id %>">
-          <div class="list-group list-group-flush">
-            <% @exercises.where(category_id: category.id).each do |exercise| %>
-              <label class="list-group-item list-group-item-action py-2 d-flex align-items-center">
-                <%= f.radio_button :exercise_id, exercise.id, class: "form-check-input me-2" %>
-                <span><%= exercise.name %></span>
-              </label>
-            <% end %>
-          </div>
-        </div>
+    <div class="list-group mb-3">
+      <% @exercises.where(category_id: @selected_category.id).each do |exercise| %>
+        <label class="list-group-item list-group-item-action py-2 d-flex align-items-center">
+          <%= f.radio_button :exercise_id, exercise.id, class: "form-check-input me-2" %>
+          <span><%= exercise.name %></span>
+        </label>
       <% end %>
     </div>
 

@@ -21,8 +21,9 @@ class WorkoutsController < ApplicationController
   def new
     @workout = current_user.workouts.new(performed_on: params[:date] || Time.zone.today)
     @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
-    @exercises = current_user.exercises.includes(:category)
     @categories = Category.order(:id)
+    @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
+    @exercises = current_user.exercises.where(category: @selected_category)
   end
 
   def create
@@ -31,8 +32,9 @@ class WorkoutsController < ApplicationController
       redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを作成しました"
     else
       @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
-      @exercises = current_user.exercises.includes(:category)
       @categories = Category.order(:id)
+      @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
+      @exercises = current_user.exercises.where(category: @selected_category)   
       render :new, status: :unprocessable_entity
     end
   end

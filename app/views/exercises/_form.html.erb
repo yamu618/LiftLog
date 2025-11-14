@@ -1,9 +1,21 @@
-<%= form_with(model: exercise, local: true) do |f| %>
-  <div class="input-group mb-3">
-    <%= f.text_field :name, class: "form-control", placeholder: "種目名" %>
-    <%= f.hidden_field :category_id, value: exercise.category_id %>
-    <button class="btn btn-success" type="submit">
-      <%= exercise.persisted? ? "更新" : "追加" %>
-    </button>
-  </div>
+<%= turbo_frame_tag dom_id(@exercise) do %>
+  <% if flash.now[:alert].present? %>
+    <div class="alert alert-danger mb-2">
+      <%= flash.now[:alert] %>
+    </div>
+  <% end %>
+  
+  <%= form_with(model: @exercise, local: false) do |f| %>
+    <div class="list-group-item d-flex align-items-center gap-2">
+      
+      <%= f.text_field :name, class: "form-control", placeholder: "種目名" %>
+      <%= f.hidden_field :category_id, value: @exercise.category_id %>
+
+      <%= f.submit "更新", class: "btn btn-sm btn-success" %>
+      <%= link_to "キャンセル",
+            exercises_path,
+            data: { turbo_frame: dom_id(@exercise) },
+            class: "btn btn-secondary btn-sm" %>
+    </div>
+  <% end %>
 <% end %>

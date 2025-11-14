@@ -23,7 +23,7 @@ class WorkoutsController < ApplicationController
     @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
     @categories = Category.order(:id)
     @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
-    @exercises = current_user.exercises.where(category: @selected_category)
+    @exercises = current_user.exercises.where(category: @selected_category).order(:name)
   end
 
   def create
@@ -34,7 +34,7 @@ class WorkoutsController < ApplicationController
       @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
       @categories = Category.order(:id)
       @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
-      @exercises = current_user.exercises.where(category: @selected_category)   
+      @exercises = current_user.exercises.where(category: @selected_category).order(:name)
       render :new, status: :unprocessable_entity
     end
   end

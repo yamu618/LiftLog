@@ -23,10 +23,10 @@
               <span><strong>セット:</strong> <%= workout.workout_sets.count %></span>
 
               <% if workout.exercise.category.name == "有酸素" %>
-                <span><strong>総距離:</strong> <%= workout.total_distance %> km</span>
+                <span><strong>総距離:</strong> <%= workout.total_distance.round(2) %> km</span>
                 <span><strong>合計時間:</strong> <%= workout.total_duration %> 分</span>
               <% else %>
-                <span><strong>総重量:</strong> <%= workout.total_weight %> kg</span>
+                <span><strong>総重量:</strong> <%= workout.total_weight.round(2) %> kg</span>
               <% end %>
             </div>
 

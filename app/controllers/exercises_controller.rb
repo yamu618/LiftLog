@@ -5,7 +5,7 @@ class ExercisesController < ApplicationController
   def index
     @categories = Category.all
     @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
-    @exercises = current_user.exercises.where(category: @selected_category)
+    @exercises = current_user.exercises.where(category: @selected_category).order(:name)
   end
 
   def create
@@ -19,20 +19,22 @@ class ExercisesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    render partial: "form", locals: { exercise: @exercise }
+  end
 
   def update
     if @exercise.update(exercise_params)
-      redirect_to exercises_path(category_id: @exercise.category_id), notice: "種目を更新しました"
+      render partial: "exercise", locals: { exercise: @exercise }
     else
       flash.now[:alert] = error_message(@exercise)
-      render :edit, status: :unprocessable_entity
+      render partial: "form", locals: { exercise: @exercise }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @exercise.destroy
-    redirect_to exercises_path(category_id: @exercise.category_id), notice: "種目を削除しました", status: :see_other
+    flash.now.notice = "種目を削除しました"
   end
 
   private

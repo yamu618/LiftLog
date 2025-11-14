@@ -5,22 +5,23 @@ class WorkoutSetsController < ApplicationController
   def edit
     @workout = @set.workout
     @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
+    render partial: "workout_sets/form", locals: { set: @set }
   end
 
   def update
     if @set.update(set_params)
-      redirect_to workout_path(@set.workout), notice: "セットを更新しました"
+      render partial: "workout_sets/set", locals: { set: @set }
     else
       @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
       @workout = @set.workout
-      render :edit, status: :unprocessable_entity
+      render partial: "workout_sets/form", locals: { set: @set }, status: :unprocessable_entity
     end
   end
 
   def destroy
     workout = @set.workout
     @set.destroy
-    redirect_to workout_path(workout), notice: "セットを削除しました"
+    flash.now.notice = "セットを削除しました。"
   end
 
   private

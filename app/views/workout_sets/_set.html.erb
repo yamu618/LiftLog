@@ -1,0 +1,28 @@
+<%= turbo_frame_tag dom_id(set) do %>
+  <div class="card mb-2 shadow-sm">
+    <div class="card-body p-2">
+      <% if set.workout.exercise.category.name == "有酸素" %>
+        <div class="d-flex gap-3 mb-2">
+          <span class="fw-bold">時間: <%= set.duration %>分</span>
+          <span class="fw-bold">距離: <%= set.distance %>km</span>
+        </div>
+      <% else %>
+        <div class="d-flex gap-3 mb-2">
+          <span class="fw-bold">重量: <%= set.weight %>kg</span>
+          <span class="fw-bold">回数: <%= set.reps %>回</span>
+        </div>
+      <% end %>
+
+      <div class="d-flex justify-content-end gap-1">
+        <%= link_to "編集",
+              edit_workout_set_path(set),
+              class: "btn btn-sm btn-primary" %>
+        <%= button_to "削除",
+              workout_set_path(set),
+              method: :delete,
+              form: { data: { turbo_confirm: "本当に削除しますか？" } },
+              class: "btn btn-sm btn-danger" %>
+      </div>
+    </div>
+  </div>
+<% end %>

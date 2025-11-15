@@ -1,0 +1,3 @@
+<% workout.workout_sets.order(:id).each do |set| %>
+  <%= render partial: "workout_sets/set", locals: { set: set } %>
+<% end %>

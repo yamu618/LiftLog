@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   resources :reports, only: %i[index]
   resources :contacts, only: %i[new create]
 
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
   get "home/index"
 
   get "/terms", to: "pages#terms", as: :terms

@@ -6,8 +6,14 @@
 
   <%= turbo_frame_tag dom_id(@workout, :set_list) do %>
     <div>
-      <% @workout.workout_sets.order(:id).each do |set| %>
-        <%= render partial: "workout_sets/set", locals: { set: set } %>
+      <% if @workout.workout_sets.any? %>
+        <% @workout.workout_sets.order(:id).each do |set| %>
+          <%= render partial: "workout_sets/set", locals: { set: set } %>
+        <% end %>
+      <% else %>
+        <div class="alert alert-info">
+          セットが登録されていません。セットを登録してください。
+        </div>
       <% end %>
     </div>
   <% end %>

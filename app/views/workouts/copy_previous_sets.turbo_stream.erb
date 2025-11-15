@@ -1,0 +1,8 @@
+<%= turbo_stream.replace dom_id(@workout, :set_list) do %>
+  <%= render partial: "workout_sets/set_list", locals: { workout: @workout } %>
+<% end %>
+
+<%= turbo_stream.replace "flash" do %>
+  <%= render "shared/flash_messages" %>
+<% end %>
+

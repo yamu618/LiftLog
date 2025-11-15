@@ -1,6 +1,6 @@
 class WorkoutsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_workout, only: %i[show destroy new_set create_set]
+  before_action :set_workout, only: %i[show destroy new_set create_set copy_previous_sets]
   skip_before_action :authenticate_user!, only: %i[index]
 
   def index
@@ -51,10 +51,6 @@ class WorkoutsController < ApplicationController
     redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを削除しました", status: :see_other
   end
 
-  def show
-    @sets = @workout.workout_sets.order(:id)
-  end
-
   def new_set
     @sets = [@workout.workout_sets.build(weight: 0, reps: 0, duration: 0, distance: 0)]
   end
@@ -64,7 +60,7 @@ class WorkoutsController < ApplicationController
     success = true
 
     if params[:workout_sets].present?
-      params[:workout_sets].each do |_i, set_attr|
+      params[:workout_sets].each_value do |set_attr|
         permitted = set_attr.permit(:weight, :reps, :duration, :distance)
         next if permitted.values.all?(&:blank?)
 
@@ -78,9 +74,30 @@ class WorkoutsController < ApplicationController
       @sets.each(&:save!)
       redirect_to workout_path(@workout), notice: "#{@sets.size}件のセットを追加しました"
     else
-      flash.now[:alert] = "エラーが発生しました。重量と回数は0以上で入力してください。"
+      flash.now[:alert] = "重量と回数は0以上で入力してください。"
       @sets = [@workout.workout_sets.build(weight: 0, reps: 0, duration: 0, distance: 0)] if @sets.blank?
       render :new_set, status: :unprocessable_entity
+    end
+  end
+
+  def copy_previous_sets
+    previous_workout = Workout.where(user_id: @workout.user_id, exercise_id: @workout.exercise_id)
+      .where("performed_on < ?", @workout.performed_on)
+      .order(performed_on: :desc)
+      .first
+
+    if previous_workout.nil?
+      flash.now.alert = "前回の記録がありませんでした。"
+    else
+      previous_workout.workout_sets.each do |set|
+        @workout.workout_sets.create!(
+          weight: set.weight,
+          reps: set.reps,
+          duration: set.duration,
+          distance: set.distance
+        )
+      end
+      flash.now.notice = "前回の記録をコピーしました。"
     end
   end
 

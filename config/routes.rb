@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  mount RailsAdmin::Engine => "/admin", as: "rails_admin"
   get "contacts/new"
   get "contacts/create"
   get "reports/index"
@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     member do
       get :new_set
       post :create_set
+      post :copy_previous_sets
     end
   end
   resources :workout_sets, only: %i[edit update destroy]

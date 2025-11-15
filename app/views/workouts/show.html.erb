@@ -4,14 +4,29 @@
   <p><strong>日付:</strong> <%= @workout.performed_on %></p>
   <p><strong>種目:</strong> <%= @workout.exercise.name %></p>
 
-  <div>
-    <% @workout.workout_sets.order(:id).each do |set| %>
-      <%= render partial: "workout_sets/set", locals: { set: set } %>
-    <% end %>
-  </div>
+  <%= turbo_frame_tag dom_id(@workout, :set_list) do %>
+    <div>
+      <% if @workout.workout_sets.any? %>
+        <% @workout.workout_sets.order(:id).each do |set| %>
+          <%= render partial: "workout_sets/set", locals: { set: set } %>
+        <% end %>
+      <% else %>
+        <div class="alert alert-info">
+          セットが登録されていません。セットを登録してください。
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 
   <div class="mt-3 d-flex flex-column flex-sm-row gap-2">
+    <%= link_to "前回の記録をコピー", copy_previous_sets_workout_path(@workout),
+                                    data: {
+                                      turbo_method: :post,
+                                      turbo_confirm: "前回の記録をコピーしますか？",
+                                      turbo_frame: dom_id(@workout, :set_list)
+                                    },
+                                    class: "btn btn-warning flex-grow-1 frex-sm-auto" %>
     <%= link_to "セット追加", new_set_workout_path(@workout), class: "btn btn-success flex-grow-1 flex-sm-auto" %>
-    <%= link_to "ワークアウト一覧に戻る", workouts_path(date: @workout.performed_on), class: "btn btn-secondary flex-grow-1 flex-sm-auto" %>
+    <%= link_to "ワークアウト一覧に戻る", workouts_path(date: @workout.performed_on, start_date: @start_date.beginning_of_month), class: "btn btn-secondary flex-grow-1 flex-sm-auto" %>
   </div>
 </div>

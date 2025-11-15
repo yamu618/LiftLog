@@ -21,7 +21,7 @@
       <% @categories.each do |category| %>
         <li class="nav-item">
           <%= link_to category.name,
-                      new_workout_path(category_id: category.id, performed_on: @workout.performed_on),
+                      new_workout_path(category_id: category.id, performed_on: @workout.performed_on, date: params[:date], start_date: params[:start_date]),
                       class: "nav-link #{'active' if category == @selected_category}" %>
         </li>
       <% end %>

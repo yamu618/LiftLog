@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     member do
       get :new_set
       post :create_set
+      post :copy_previous_sets
     end
   end
   resources :workout_sets, only: %i[edit update destroy]

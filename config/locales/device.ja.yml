@@ -1,0 +1,8 @@
+ja:
+  devise:
+    passwords:
+      send_instructions: "パスワード再設定用のメールを送信しました。メールをご確認ください。"
+      updated: "パスワードが更新されました。ログインを行いました。"
+    mailer:
+      reset_password_instructions:
+        subject: "パスワード再設定のご案内"

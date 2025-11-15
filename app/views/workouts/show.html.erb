@@ -27,6 +27,6 @@
                                     },
                                     class: "btn btn-warning flex-grow-1 frex-sm-auto" %>
     <%= link_to "セット追加", new_set_workout_path(@workout), class: "btn btn-success flex-grow-1 flex-sm-auto" %>
-    <%= link_to "ワークアウト一覧に戻る", workouts_path(date: @workout.performed_on), class: "btn btn-secondary flex-grow-1 flex-sm-auto" %>
+    <%= link_to "ワークアウト一覧に戻る", workouts_path(date: @workout.performed_on, start_date: @start_date.beginning_of_month), class: "btn btn-secondary flex-grow-1 flex-sm-auto" %>
   </div>
 </div>

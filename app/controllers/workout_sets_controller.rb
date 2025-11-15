@@ -19,7 +19,7 @@ class WorkoutSetsController < ApplicationController
   end
 
   def destroy
-    workout = @set.workout
+    @set.workout
     @set.destroy
     flash.now.notice = "セットを削除しました。"
   end

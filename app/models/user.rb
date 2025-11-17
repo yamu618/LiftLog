@@ -23,7 +23,8 @@
 #
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   has_many :workouts, dependent: :destroy
   has_many :exercises, dependent: :destroy
@@ -31,6 +32,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true,
                        length: { maximum: 20 }
+  validates :uid, uniquness: { scope: :provider}
 
   after_create :copy_default_exercises
 
@@ -40,6 +42,20 @@ class User < ApplicationRecord
         name: template.name,
         category_id: template.category_id
       )
+    end
+  end
+
+  def self.from_omniauth(auth)
+    #SNSから取得した名前の補正
+    raw_name = auth.info.name.to_s.strip
+    username = raw_name[0...20] 
+    username = "user_#{SecureRandom.hex(4)}" if username.blank? || username.gsub(/\W/, '').blank?
+
+    # providerとuidでユーザーを検索 or 作成
+    User.find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+      user.email = auth.info.email
+      user.username = username
+      user.password = Devise.friendly_token[0, 20]
     end
   end
 end

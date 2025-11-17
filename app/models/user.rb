@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true,
                        length: { maximum: 20 }
-  validates :uid, uniquness: { scope: :provider}
+  validates :uid, uniqueness: { scope: :provider}
 
   after_create :copy_default_exercises
 

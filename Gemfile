@@ -44,6 +44,9 @@ gem 'devise', '~> 4.9.4'
 gem 'devise-i18n', '~> 1.15'
 gem 'cancancan', '~> 3.6'
 
+#SNSログイン
+gem 'omniauth-google-oauth2'
+
 # 管理画面
 # gem 'activeadmin', '~> 3.4'
 gem 'rails_admin', '~> 3.3'

@@ -1,5 +1,5 @@
 <div class="container mt-2">
-  <h2 class="mb-4"><%= @workout_title %></h2>
+  <h2 class="mb-3"><%= @workout_title %></h2>
 
   <div class="mb-4">
     <%= month_calendar(events: @all_workouts, attribute: :performed_on, start_date: @start_date) do |date, workouts| %>

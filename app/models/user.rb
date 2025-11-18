@@ -49,7 +49,6 @@ class User < ApplicationRecord
     #SNSから取得した名前の補正
     raw_name = auth.info.name.to_s.strip
     username = raw_name[0...20] 
-    username = "user_#{SecureRandom.hex(4)}" if username.blank? || username.gsub(/\W/, '').blank?
 
     # providerとuidでユーザーを検索 or 作成
     User.find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|

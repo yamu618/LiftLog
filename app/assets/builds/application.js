@@ -15786,9 +15786,28 @@ var sets_controller_default = class extends Controller {
   }
 };
 
+// app/javascript/controllers/password_toggle_controller.js
+var password_toggle_controller_default = class extends Controller {
+  static targets = ["input", "icon"];
+  toggle() {
+    const input = this.inputTarget;
+    const icon = this.iconTarget;
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.remove("fa-eye");
+      icon.classList.add("fa-eye-slash");
+    } else {
+      input.type = "password";
+      icon.classList.remove("fa-eye-slash");
+      icon.classList.add("fa-eye");
+    }
+  }
+};
+
 // app/javascript/controllers/index.js
 application.register("hello", hello_controller_default);
 application.register("sets", sets_controller_default);
+application.register("password-toggle", password_toggle_controller_default);
 
 // app/javascript/application.js
 console.log("Hotwire loaded successfully! \u{1F680}");

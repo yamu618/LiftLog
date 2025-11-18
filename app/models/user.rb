@@ -58,4 +58,8 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0, 20]
     end
   end
+
+  def sns_user?
+    provider.present? && uid.present?
+  end
 end

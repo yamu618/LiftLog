@@ -6,9 +6,11 @@
 #  admin                  :boolean          default(FALSE)
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  uid                    :string
 #  username               :string           default(""), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
@@ -16,11 +18,13 @@
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_provider_and_uid      (provider,uid) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   has_many :workouts, dependent: :destroy
   has_many :exercises, dependent: :destroy
@@ -28,6 +32,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true,
                        length: { maximum: 20 }
+  validates :uid, uniqueness: { scope: :provider}
 
   after_create :copy_default_exercises
 
@@ -38,5 +43,22 @@ class User < ApplicationRecord
         category_id: template.category_id
       )
     end
+  end
+
+  def self.from_omniauth(auth)
+    #SNSから取得した名前の補正
+    raw_name = auth.info.name.to_s.strip
+    username = raw_name[0...20] 
+
+    # providerとuidでユーザーを検索 or 作成
+    User.find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+      user.email = auth.info.email
+      user.username = username
+      user.password = Devise.friendly_token[0, 20]
+    end
+  end
+
+  def sns_user?
+    provider.present? && uid.present?
   end
 end

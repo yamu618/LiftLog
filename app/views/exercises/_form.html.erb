@@ -13,9 +13,9 @@
 
       <%= f.submit "更新", class: "btn btn-sm btn-success" %>
       <%= link_to "キャンセル",
-            exercises_path,
-            data: { turbo_frame: dom_id(@exercise) },
-            class: "btn btn-secondary btn-sm" %>
+            exercises_path(category_id: @exercise.category_id),
+            class: "btn btn-secondary btn-sm",
+            data: { turbo: false } %>
     </div>
   <% end %>
 <% end %>

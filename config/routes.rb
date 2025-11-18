@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   get "contacts/new"
   get "contacts/create"
   get "reports/index"
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { 
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+   }
 
   resources :exercises, only: %i[index edit create update destroy]
   resources :workouts do

@@ -1,28 +1,30 @@
-<div class="container mt-2">
-  <h2 class="mb-3">種目管理</h2>
+<turbo-frame id="category_tabs_and_exercises">
+  <div class="container mt-2">
+    <h2 class="mb-3">種目管理</h2>
 
-  <div class="card shadow-sm mb-3 w-100 border-0">
-    <div class="card-header bg-success text-white py-1">
-      新しい種目を追加
+    <div class="card shadow-sm mb-3 w-100 border-0">
+      <div class="card-header bg-success text-white py-1">
+        新しい種目を追加
+      </div>
+      <div class="card-body p-2">
+        <%= render partial: "add_form", locals: { exercise: Exercise.new(category: @selected_category) } %>
+      </div>
     </div>
-    <div class="card-body p-2">
-      <%= render partial: "add_form", locals: { exercise: Exercise.new(category: @selected_category) } %>
+
+    <ul class="nav nav-tabs mb-3 flex-wrap">
+      <% @categories.each do |category| %>
+        <li class="nav-item">
+          <%= link_to category.name,
+                      exercises_path(category_id: category.id),
+                      class: "nav-link #{'active' if category == @selected_category}" %>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="list-group">
+      <% @exercises.each do |exercise| %>
+        <%= render partial: "exercise", locals: { exercise: exercise } %>
+      <% end %>
     </div>
   </div>
-
-  <ul class="nav nav-tabs mb-3 flex-wrap">
-    <% @categories.each do |category| %>
-      <li class="nav-item">
-        <%= link_to category.name,
-                    exercises_path(category_id: category.id),
-                    class: "nav-link #{'active' if category == @selected_category}" %>
-      </li>
-    <% end %>
-  </ul>
-
-  <div class="list-group">
-    <% @exercises.each do |exercise| %>
-      <%= render partial: "exercise", locals: { exercise: exercise } %>
-    <% end %>
-  </div>
-</div>
+</turbo-frame>

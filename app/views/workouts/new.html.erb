@@ -17,25 +17,26 @@
       <%= f.date_field :performed_on, class: "form-control" %>
     </div>
 
-    <ul class="nav nav-tabs mb-2">
-      <% @categories.each do |category| %>
-        <li class="nav-item">
-          <%= link_to category.name,
-                      new_workout_path(category_id: category.id, performed_on: @workout.performed_on, date: params[:date], start_date: params[:start_date]),
-                      class: "nav-link #{'active' if category == @selected_category}" %>
-        </li>
-      <% end %>
-    </ul>
+    <turbo-frame id="category_exercises_frame">
+      <ul class="nav nav-tabs mb-2">
+        <% @categories.each do |category| %>
+          <li class="nav-item">
+            <%= link_to category.name,
+                        new_workout_path(category_id: category.id, performed_on: @workout.performed_on, date: params[:date], start_date: params[:start_date]),
+                        class: "nav-link #{'active' if category == @selected_category}" %>
+          </li>
+        <% end %>
+      </ul>
 
-    <div class="list-group mb-3">
-      <% @exercises.where(category_id: @selected_category.id).each do |exercise| %>
-        <label class="list-group-item list-group-item-action py-2 d-flex align-items-center">
-          <%= f.radio_button :exercise_id, exercise.id, class: "form-check-input me-2" %>
-          <span><%= exercise.name %></span>
-        </label>
-      <% end %>
-    </div>
-
+      <div class="list-group mb-3">
+        <% @exercises.where(category_id: @selected_category.id).each do |exercise| %>
+          <label class="list-group-item list-group-item-action py-2 d-flex align-items-center">
+            <%= f.radio_button :exercise_id, exercise.id, class: "form-check-input me-2" %>
+            <span><%= exercise.name %></span>
+          </label>
+        <% end %>
+      </div>
+    </turbo-frame>
     <div class="d-flex flex-column flex-sm-row gap-2">
       <%= f.submit "作成", class: "btn btn-success flex-grow-1 flex-sm-auto" %>
       <%= link_to "キャンセル", workouts_path(date: @workout.performed_on, start_date: @start_date.beginning_of_month), class: "btn btn-secondary flex-grow-1 flex-sm-auto" %>

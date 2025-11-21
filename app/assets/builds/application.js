@@ -13883,13 +13883,13 @@ var AttributeObserver = class {
   }
 };
 function add(map, key, value) {
-  fetch(map, key).add(value);
+  fetch2(map, key).add(value);
 }
 function del(map, key, value) {
-  fetch(map, key).delete(value);
+  fetch2(map, key).delete(value);
   prune(map, key);
 }
-function fetch(map, key) {
+function fetch2(map, key) {
   let values = map.get(key);
   if (!values) {
     values = /* @__PURE__ */ new Set();
@@ -15804,10 +15804,45 @@ var password_toggle_controller_default = class extends Controller {
   }
 };
 
+// app/javascript/controllers/autocomplete_controller.js
+var autocomplete_controller_default = class extends Controller {
+  static targets = ["input", "results"];
+  search() {
+    const query = this.inputTarget.value;
+    const categoryId = this.data.get("category-id");
+    if (!query) {
+      this.resultsTarget.innerHTML = "";
+      return;
+    }
+    fetch(
+      `/api/exercises?query=${query}&category_id=${categoryId}`
+    ).then((response) => response.json()).then((names) => {
+      this.resultsTarget.innerHTML = names.map(
+        (name) => `<div class="suggestion" style="padding:5px 10px; cursor:pointer;">${name}</div>`
+      ).join("");
+      this.resultsTarget.querySelectorAll(".suggestion").forEach((el) => {
+        el.addEventListener(
+          "mouseenter",
+          () => el.style.backgroundColor = "#f0f0f0"
+        );
+        el.addEventListener(
+          "mouseleave",
+          () => el.style.backgroundColor = "white"
+        );
+        el.addEventListener("click", () => {
+          this.inputTarget.value = el.textContent;
+          this.resultsTarget.innerHTML = "";
+        });
+      });
+    });
+  }
+};
+
 // app/javascript/controllers/index.js
 application.register("hello", hello_controller_default);
 application.register("sets", sets_controller_default);
 application.register("password-toggle", password_toggle_controller_default);
+application.register("autocomplete", autocomplete_controller_default);
 
 // app/javascript/application.js
 console.log("Hotwire loaded successfully! \u{1F680}");

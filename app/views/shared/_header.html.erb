@@ -19,8 +19,12 @@
                       data: { turbo_method: :delete, turbo_confirm: "ログアウトしますか？" },
                       class: "btn btn-sm btn-outline-danger" %>
       <% else %>
-        <%= link_to "新規会員登録", new_user_registration_path, class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to "TOP", workouts_path, class: "btn btn-sm btn-outline-primary" %>
+        <%= link_to "新規会員登録", new_user_registration_path, class: "btn btn-success btn-sm" %>
         <%= link_to "ログイン", new_user_session_path, class: "btn btn-sm btn-primary" %>
+        <%= link_to "レポート", reports_path, class: "btn btn-sm btn-outline-secondary" %>
+        <%= link_to "種目", exercises_path, class: "btn btn-sm btn-outline-secondary" %>
+        <%= link_to "設定", edit_user_registration_path, class: "btn btn-sm btn-outline-secondary" %>
       <% end %>
     </div>
 

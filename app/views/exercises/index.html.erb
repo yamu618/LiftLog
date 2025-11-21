@@ -6,7 +6,7 @@
 
     <div class="card shadow-sm mb-3 w-100 border-0">
       <div class="card-header bg-success text-white py-1">
-        新しい種目を追加
+        新しい種目を追加（カテゴリーを選択してください）
       </div>
       <div class="card-body p-2">
         <%= render partial: "add_form", locals: { exercise: Exercise.new(category: @selected_category) } %>

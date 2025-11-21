@@ -27,6 +27,11 @@ Rails.application.routes.draw do
   resources :reports, only: %i[index]
   resources :contacts, only: %i[new create]
 
+  # api
+  namespace :api do
+    get "exercises", to: "exercises#index"
+  end
+
   # 開発用メール確認
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

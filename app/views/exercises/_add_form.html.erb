@@ -1,9 +1,23 @@
-<%= form_with(model: exercise, local: true, data: { turbo: false }) do |f| %>
-  <div class="input-group mb-3">
-    <%= f.text_field :name, class: "form-control", placeholder: "種目名" %>
-    <%= f.hidden_field :category_id, value: exercise.category_id %>
-    <button class="btn btn-success" type="submit">
-      <%= "追加" %>
-    </button>
-  </div>
-<% end %>
+<div class="card-body p-2">
+  <%= form_with(model: exercise, local: true, data: { turbo: false }) do |f| %>
+    <div class="input-group mb-3" style="position: relative;"
+         data-controller="autocomplete"
+         data-autocomplete-category-id="<%= @selected_category.id %>">
+
+      <%= f.text_field :name,
+            class: "form-control",
+            placeholder: "種目名",
+            data: { "autocomplete-target": "input", action: "input->autocomplete#search" } %>
+
+      <%= f.hidden_field :category_id, value: @selected_category.id %>
+
+      <button class="btn btn-success" type="submit">追加</button>
+      
+      <div data-autocomplete-target="results"
+           style="position: absolute; top: 100%; left: 0; right: 0; 
+                  background: white; border: 1px solid #ddd; 
+                  max-height: 200px; overflow-y: auto; z-index: 1000;">
+      </div>
+    </div>
+  <% end %>
+</div>

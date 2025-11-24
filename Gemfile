@@ -93,7 +93,7 @@ group :development do
 
   # コード品質・デバッグ
   gem 'rubocop', '~> 1.66', require: false
-  gem 'rubocop-rails', '~> 2.33', require: false
+  gem 'rubocop-rails', '~> 2.34', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-performance', require: false
   gem 'better_errors'

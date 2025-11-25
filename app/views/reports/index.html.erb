@@ -4,7 +4,7 @@
   <h2 class="mb-4">トレーニングレポート</h2>
 
   <div class="card mb-4 shadow-sm">
-    <div class="card-header bg-primary text-white">
+    <div class="card-header bg-dark text-white">
       <strong>トレーニング日数</strong>
     </div>
     <div class="card-body">
@@ -34,13 +34,13 @@
   </div>
 
   <div class="card shadow-sm">
-    <div class="card-header bg-success text-white">
-      <strong>総重量レポート（月別）</strong>
+    <div class="card-header bg-dark text-white">
+      <strong>総重量＆総距離レポート（月別）</strong>
     </div>
     <div class="card-body">
       <turbo-frame id="category_tabs_and_exercises">
         <ul class="nav nav-tabs mb-3 flex-wrap">
-          <% @categories.reject { |c| c.name == "有酸素" }.each do |category| %>
+          <% @categories.each do |category| %>
             <li class="nav-item">
               <%= link_to category.name,
                           reports_path(category_id: category.id),
@@ -51,7 +51,8 @@
         </ul>
 
         <div class="d-flex flex-wrap gap-2 mb-3">
-          <% @exercises.each do |exercise| %>
+          <% exercises = @selected_category.name == "有酸素" ? @cardio_exercises : @exercises %>
+          <% exercises.each do |exercise| %>
             <%= link_to exercise.name,
                         reports_path(exercise_id: exercise.id, category_id: @selected_category.id),
                         class: "btn btn-outline-primary btn-sm",
@@ -66,8 +67,8 @@
                 loading: "読み込み中です...",
                 height: "250px",
                 library: { 
-                  title: { text: "#{@selected_exercise.name}の総重量推移" },
-                  yAxis: { title: { text: "総重量(kg)" } },
+                  title: { text: "#{@selected_exercise.name}の#{@selected_category.name == "有酸素" ? "総距離" : "総重量"}推移" },
+                  yAxis: { title: { text: @selected_category.name == "有酸素" ? "km" : "kg" } },
                   responsive: {
                     rules: [{
                       condition: { maxWidth: 500 },

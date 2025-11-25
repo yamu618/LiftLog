@@ -2,12 +2,14 @@
 #
 # Table name: exercises
 #
-#  id          :bigint           not null, primary key
-#  name        :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  category_id :bigint           not null
-#  user_id     :bigint
+#  id            :bigint           not null, primary key
+#  best_distance :float
+#  best_weight   :float
+#  name          :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  category_id   :bigint           not null
+#  user_id       :bigint
 #
 # Indexes
 #

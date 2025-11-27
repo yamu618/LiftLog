@@ -52,10 +52,10 @@ class WorkoutSet < ApplicationRecord
 
     if exercise.category.name == "有酸素"
       max_distance = all_sets.maximum(:distance)
-      exercise.update(best_distance: max_distance) if max_distance && max_distance > (exercise.best_distance || 0)
+      exercise.update(best_distance: max_distance || 0)
     else
       max_weight = all_sets.maximum(:weight)
-      exercise.update(best_weight: max_weight) if max_weight && max_weight > (exercise.best_weight || 0)
+      exercise.update(best_weight: max_weight || 0)
     end
   end
 end

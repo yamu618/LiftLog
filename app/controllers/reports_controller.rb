@@ -19,6 +19,7 @@ class ReportsController < ApplicationController
     if @selected_category.name == "有酸素"
       @cardio_exercises = current_user.exercises.where(category: @selected_category).order(:name)
       @selected_exercise = params[:exercise_id].present? ? current_user.exercises.find_by(id: params[:exercise_id]) : nil
+      @exercise_best = @selected_exercise&.best_distance
 
       if @selected_exercise
         data = @selected_exercise.workouts.joins(:workout_sets)
@@ -31,6 +32,7 @@ class ReportsController < ApplicationController
     else
       @exercises = current_user.exercises.where(category: @selected_category).order(:name)
       @selected_exercise = params[:exercise_id].present? ? current_user.exercises.find_by(id: params[:exercise_id]) : nil
+      @exercise_best = @selected_exercise&.best_weight
 
       if @selected_exercise
         data = @selected_exercise.workouts

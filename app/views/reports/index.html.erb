@@ -85,4 +85,63 @@
       <% end %>
     </div>
   </div>
+
+  <div class="card shadow-sm mt-4">
+    <div class="card-header bg-dark text-white">
+      <strong>自己ベスト（MAX重量＆MAX距離）</strong>
+    </div>
+    <div class="card-body">
+      <turbo-frame id="category_tabs_and_exercises_personal_best">
+        <ul class="nav nav-tabs mb-3 flex-wrap">
+          <% @categories.each do |category| %>
+            <li class="nav-item">
+              <%= link_to category.name,
+                          reports_path(category_id: category.id),
+                          class: "nav-link #{'active' if category == @selected_category}",
+                          data: { turbo_frame: "category_tabs_and_exercises_personal_best" } %>
+            </li>
+          <% end %>
+        </ul>
+
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <% exercises = @selected_category.name == "有酸素" ? @cardio_exercises : @exercises %>
+          <% exercises.each do |exercise| %>
+            <%= link_to exercise.name,
+                        reports_path(exercise_id: exercise.id, category_id: @selected_category.id),
+                        class: "btn btn-outline-danger btn-sm",
+                        data: { turbo_frame: "personal_best" } %>
+          <% end %>
+        </div>
+      </turbo-frame>
+
+      <turbo-frame id="personal_best">
+        <% if @selected_exercise.present? %>
+          <div class="border-top pt-3">
+            <h5 class="fw-bold mb-1 text-center"><%= @selected_exercise.name %></h5>
+
+            <% if @selected_category.name == "有酸素" %>
+              <% if @exercise_best.present? %>
+                <p class="fs-5 fw-bold mb-0 text-center">
+                  自己ベストは<%= @exercise_best.round(2) %>kmです🔥
+                </p>
+              <% else %>
+                <p class="text-muted mb-0">この種目には記録がありません。</p>
+              <% end %>
+            <% else %>
+              <% if @exercise_best.present? %>
+                <p class="fs-5 fw-bold mb-0 text-center">
+                  自己ベストは<%= @exercise_best.round(2) %>kgです🔥
+                </p>
+              <% else %>
+                <p class="text-muted mb-0">この種目には記録がありません。</p>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted text-center mb-0">
+            種目を選択すると自己ベストが表示されます。
+          </p>
+        <% end %>
+      </turbo-frame>
+    </div>
 </div>

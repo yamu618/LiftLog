@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_17_050852) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_25_160046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_17_050852) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "best_weight"
+    t.float "best_distance"
     t.index ["category_id"], name: "index_exercises_on_category_id"
     t.index ["name", "category_id", "user_id"], name: "index_exercises_on_name_and_category_id_and_user_id", unique: true
     t.index ["user_id"], name: "index_exercises_on_user_id"

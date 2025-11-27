@@ -34,10 +34,28 @@ class WorkoutSet < ApplicationRecord
 
   after_save :update_workout_total_weight
   after_destroy :update_workout_total_weight
+  after_save :update_exercise_best
+  after_destroy :update_exercise_best
 
   private
 
   def update_workout_total_weight
     workout.update(total_weight: workout.workout_sets.sum { |s| s.weight * s.reps })
+  end
+
+  def update_exercise_best
+    exercise = workout.exercise
+
+    all_sets = WorkoutSet.joins(workout: :exercise)
+                         .where(workouts: { user_id: workout.user_id},
+                                exercises: { id: exercise.id })
+
+    if exercise.category.name == "有酸素"
+      max_distance = all_sets.maximum(:distance)
+      exercise.update(best_distance: max_distance || 0)
+    else
+      max_weight = all_sets.maximum(:weight)
+      exercise.update(best_weight: max_weight || 0)
+    end
   end
 end

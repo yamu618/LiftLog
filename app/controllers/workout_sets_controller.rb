@@ -10,11 +10,17 @@ class WorkoutSetsController < ApplicationController
 
   def update
     if @set.update(set_params)
-      render partial: "workout_sets/set", locals: { set: @set }
+      best_amount = @set.best_updated_amount
+      best_type = @set.best_updated_type
+
+      flash[:personal_best] = { amount: best_amount, type: best_type } if best_amount.present?
     else
       @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
       @workout = @set.workout
-      render partial: "workout_sets/form", locals: { set: @set }, status: :unprocessable_entity
+
+      respond_to do |format|
+        format.turbo_stream { render :update_failed, status: :unprocessable_entity } 
+      end
     end
   end
 

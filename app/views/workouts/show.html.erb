@@ -1,10 +1,23 @@
 <% content_for :title, "LiftLog - セット管理" %>
 
+<% if flash[:personal_best_create] %>
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+    <div class="toast show align-items-center text-bg-success border-0">
+      <div class="d-flex">
+        <div class="toast-body">
+          おめでとうございます！自己ベストを<%= flash[:personal_best_create]["amount"].round(2) %><%= flash[:personal_best_create]["type"] == "distance" ? "km" : "kg" %>更新しました🎉
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <div class="container mt-2">
   <h2 class="mb-4">セット管理</h2>
 
   <p><strong>日付:</strong> <%= @workout.performed_on %></p>
-  <p><strong>種目:</strong> <%= @workout.exercise.name %></p>
+  <p><strong>種目: <%= @workout.exercise.name %></strong></p>
 
   <%= turbo_frame_tag dom_id(@workout, :set_list) do %>
     <div>
@@ -24,8 +37,7 @@
     <%= link_to "前回の記録をコピー", copy_previous_sets_workout_path(@workout),
                                     data: {
                                       turbo_method: :post,
-                                      turbo_confirm: "前回の記録をコピーしますか？",
-                                      turbo_frame: dom_id(@workout, :set_list)
+                                      turbo_confirm: "前回の記録をコピーしますか？"
                                     },
                                     class: "btn btn-warning flex-grow-1 frex-sm-auto" %>
     <%= link_to "セット追加", new_set_workout_path(@workout), class: "btn btn-success flex-grow-1 flex-sm-auto" %>

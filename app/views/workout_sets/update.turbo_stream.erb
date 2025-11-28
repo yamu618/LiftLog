@@ -1,0 +1,7 @@
+<%= turbo_stream.replace dom_id(@set) do %> 
+  <%= render "workout_sets/set", set: @set %> 
+<% end %> 
+
+<%= turbo_stream.update "flash" do %> 
+  <%= render "shared/personal_best_toast" %> 
+<% end %>

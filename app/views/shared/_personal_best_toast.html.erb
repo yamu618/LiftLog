@@ -1,0 +1,12 @@
+<% if flash[:personal_best] && flash[:personal_best][:amount].present? %>
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+    <div class="toast show align-items-center text-bg-success border-0">
+      <div class="d-flex">
+        <div class="toast-body">
+          おめでとうございます！自己ベストを<%= flash[:personal_best][:amount].round(2) %><%= flash[:personal_best][:type] == "distance" ? "km" : "kg" %>更新しました🎉
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+<% end %>

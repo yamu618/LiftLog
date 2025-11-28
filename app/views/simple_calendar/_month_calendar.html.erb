@@ -15,16 +15,20 @@
     <table class="table table-bordered text-center mb-0">
       <thead>
         <tr>
-          <% date_range.slice(0,7).each do |day| %>
-            <th class="p-1"><%= t('date.abbr_day_names')[day.wday] %></th>
+          <% ['日', '月', '火', '水', '木', '金', '土'].each do |day_name| %>
+            <th class="p-1"><%= day_name %></th>
           <% end %>
         </tr>
       </thead>
       <tbody>
+        <% first_day = @start_date.beginning_of_month.beginning_of_week(:sunday) %>
+        <% last_day = @start_date.end_of_month.end_of_week(:sunday) %>
+        <% date_range = (first_day..last_day).to_a %>
+
         <% date_range.each_slice(7) do |week| %>
           <tr>
             <% week.each do |day| %>
-              <td class="p-1 <%= 'bg-light ' if day.month != @start_date.month %>">
+              <td class="p-1 <%= 'bg-light' if day.month != @start_date.month %>">
                 <%= link_to workouts_path(date: day, start_date: @start_date.beginning_of_month),
                     class: "d-block text-decoration-none #{'bg-primary-subtle border-primary' if day == @selected_date} #{'text-muted' if day.month != @start_date.month}" do %>
                   <div class="fw-bold"><%= day.day %></div>

@@ -108,7 +108,7 @@
           <% exercises.each do |exercise| %>
             <%= link_to exercise.name,
                         reports_path(exercise_id: exercise.id, category_id: @selected_category.id),
-                        class: "btn btn-outline-danger btn-sm",
+                        class: "btn btn-outline-primary btn-sm",
                         data: { turbo_frame: "personal_best" } %>
           <% end %>
         </div>

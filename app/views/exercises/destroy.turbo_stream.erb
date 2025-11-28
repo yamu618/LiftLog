@@ -1,5 +1,5 @@
 <%= turbo_stream.remove dom_id(@exercise) %>
 
-<%= turbo_stream.replace "flash" do %>
+<%= turbo_stream.update "flash" do %>
   <%= render "shared/flash_messages" %>
 <% end %>

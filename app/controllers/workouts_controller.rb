@@ -29,6 +29,8 @@ class WorkoutsController < ApplicationController
   def create
     @workout = current_user.workouts.new(workout_params)
     if @workout.save
+      check_training_days_milestone
+
       redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを作成しました"
     else
       @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
@@ -116,5 +118,31 @@ class WorkoutsController < ApplicationController
 
   def workout_params
     params.require(:workout).permit(:exercise_id, :performed_on)
+  end
+
+  def check_training_days_milestone
+    total_days = current_user.workouts.select(:performed_on).distinct.count
+
+    if total_days >= 365 && total_days % 365 == 0
+      flash[:training_milestone] = milestone_message(total_days)
+      return
+    end
+
+    milestones = [1, 10, 30, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000]
+
+    if milestones.include?(total_days)
+      flash[:training_milestone] = milestone_message(total_days)
+    end
+  end
+
+  def milestone_message(days)
+    if days == 1
+      "初めまして！ LiftLogはあなたのトレーニングを全力でサポートします。"
+    elsif days % 365 == 0
+      years = days / 365
+      "おめでとうございます！ 総トレーニング日数が#{days}日（#{years}年）を突破しました🔥 これからもLiftLogが伴走し続けます。"
+    else
+      "おめでとうございます！ 総トレーニング日数が#{days}日を突破しました🔥"
+    end
   end
 end

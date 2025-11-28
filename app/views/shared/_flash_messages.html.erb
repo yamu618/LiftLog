@@ -1,6 +1,7 @@
 <% flash.each do |key, message| %>
   <% next if key.to_s == "personal_best" %>
   <% next if key.to_s == "personal_best_create" %>
+  <% next if key.to_s == "training_milestone" %>
   <div class="alert <%= "alert-success" if key == "notice" %> <%= "alert-danger" if key == "alert" %> alert-dismissible fade show">
     <%= message %>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

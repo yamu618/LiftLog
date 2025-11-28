@@ -71,6 +71,14 @@ class WorkoutsController < ApplicationController
 
     if success && @sets.any?
       @sets.each(&:save!)
+
+      best_update_value = @sets.map(&:best_updated_amount).compact.max
+      best_update_type  = @sets.find { |s| s.best_updated_amount.present? }&.best_updated_type
+
+      if best_update_value.present?
+        flash[:personal_best_create] = { amount: best_update_value, type: best_update_type }
+      end
+
       redirect_to workout_path(@workout), notice: "#{@sets.size}件のセットを追加しました"
     else
       flash.now[:alert] = "重量と回数は0以上で入力してください。"
@@ -86,7 +94,7 @@ class WorkoutsController < ApplicationController
       .first
 
     if previous_workout.nil?
-      flash.now.alert = "前回の記録がありませんでした。"
+      redirect_to workout_path(@workout), alert: "前回の記録がありませんでした。"
     else
       previous_workout.workout_sets.each do |set|
         @workout.workout_sets.create!(
@@ -96,7 +104,7 @@ class WorkoutsController < ApplicationController
           distance: set.distance
         )
       end
-      flash.now.notice = "前回の記録をコピーしました。"
+      redirect_to workout_path(@workout), notice: "前回の記録をコピーしました。"
     end
   end
 

@@ -32,6 +32,8 @@ class WorkoutSet < ApplicationRecord
     validates :distance, presence: true, numericality: { greater_than_or_equal_to: 0.0 }
   end
 
+  attr_accessor :best_updated_amount, :best_updated_type
+
   after_save :update_workout_total_weight
   after_destroy :update_workout_total_weight
   after_save :update_exercise_best
@@ -52,9 +54,23 @@ class WorkoutSet < ApplicationRecord
 
     if exercise.category.name == "有酸素"
       max_distance = all_sets.maximum(:distance)
+      previous_best = exercise.best_distance || 0
+
+      if distance && distance > previous_best
+        self.best_updated_amount = distance - previous_best
+        self.best_updated_type = "distance"
+      end
+
       exercise.update(best_distance: max_distance || 0)
     else
       max_weight = all_sets.maximum(:weight)
+      previous_best = exercise.best_weight || 0
+
+      if weight && weight > previous_best
+        self.best_updated_amount = weight - previous_best
+        self.best_updated_type = "weight"
+      end
+
       exercise.update(best_weight: max_weight || 0)
     end
   end

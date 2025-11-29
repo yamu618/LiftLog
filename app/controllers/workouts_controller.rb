@@ -37,6 +37,7 @@ class WorkoutsController < ApplicationController
       @categories = Category.order(:id)
       @selected_category = params[:category_id].present? ? Category.find(params[:category_id]) : @categories.first
       @exercises = current_user.exercises.where(category: @selected_category).order(:name)
+      flash.now[:alert] = "種目を選択してください。"
       render :new, status: :unprocessable_entity
     end
   end
@@ -60,6 +61,10 @@ class WorkoutsController < ApplicationController
     @sets = []
     success = true
 
+    exercise = @workout.exercise
+    previous_best_weight = exercise.best_weight || 0
+    previous_best_distance = exercise.best_distance || 0
+
     if params[:workout_sets].present?
       params[:workout_sets].each_value do |set_attr|
         permitted = set_attr.permit(:weight, :reps, :duration, :distance)
@@ -74,11 +79,14 @@ class WorkoutsController < ApplicationController
     if success && @sets.any?
       @sets.each(&:save!)
 
-      best_update_value = @sets.map(&:best_updated_amount).compact.max
-      best_update_type  = @sets.find { |s| s.best_updated_amount.present? }&.best_updated_type
+      amount, type = calculate_and_apply_best_for_workout(
+        @workout,
+        previous_best_weight: previous_best_weight,
+        previous_best_distance: previous_best_distance
+      )
 
-      if best_update_value.present?
-        flash[:personal_best_create] = { amount: best_update_value, type: best_update_type }
+      if amount.present?
+        flash[:personal_best_create] = { amount: amount, type: type }
       end
 
       redirect_to workout_path(@workout), notice: "#{@sets.size}件のセットを追加しました"
@@ -121,6 +129,9 @@ class WorkoutsController < ApplicationController
   end
 
   def check_training_days_milestone
+    todays_workouts_count = current_user.workouts.where(performed_on: @workout.performed_on).count
+    return if todays_workouts_count > 1
+
     total_days = current_user.workouts.select(:performed_on).distinct.count
 
     if total_days >= 365 && total_days % 365 == 0
@@ -144,5 +155,32 @@ class WorkoutsController < ApplicationController
     else
       "おめでとうございます！ 総トレーニング日数が#{days}日を突破しました🔥"
     end
+  end
+
+  def calculate_and_apply_best_for_workout(workout, previous_best_weight:, previous_best_distance:)
+    exercise = workout.exercise
+    user = workout.user
+
+    all_sets = WorkoutSet.joins(workout: :exercise)
+                        .where(workouts: { user_id: user.id },
+                                exercises: { id: exercise.id })
+
+    if exercise.category.name == "有酸素"
+      max_distance = all_sets.maximum(:distance) || 0
+
+      if max_distance > previous_best_distance
+        exercise.update!(best_distance: max_distance)
+        return [max_distance - previous_best_distance, "distance"]
+      end
+    else
+      max_weight = all_sets.maximum(:weight) || 0
+
+      if max_weight > previous_best_weight
+        exercise.update!(best_weight: max_weight)
+        return [max_weight - previous_best_weight, "weight"]
+      end
+    end
+
+    return [nil, nil]
   end
 end

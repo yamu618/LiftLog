@@ -36,7 +36,7 @@ class WorkoutSet < ApplicationRecord
 
   after_save :update_workout_total_weight
   after_destroy :update_workout_total_weight
-  after_save :update_exercise_best
+  after_update :update_exercise_best
   after_destroy :update_exercise_best
 
   private

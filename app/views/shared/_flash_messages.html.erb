@@ -1,9 +1,9 @@
-<div id="flash" class="position-fixed top-0 start-50 translate-middle-x w-100 p-3" style="z-index: 1000;">
+<div id="flash" class="position-fixed top-0 end-0 p-3" style="z-index: 1000; pointer-events: none;">
   <% flash.each do |key, message| %>
     <% next if key.to_s == "personal_best" %>
     <% next if key.to_s == "personal_best_create" %>
     <% next if key.to_s == "training_milestone" %>
-    <div class="alert <%= "alert-success" if key == "notice" %> <%= "alert-danger" if key == "alert" %> alert-dismissible fade show mb-2" role="alert">
+    <div class="alert <%= "alert-success" if key == "notice" %> <%= "alert-danger" if key == "alert" %> alert-dismissible fade show mb-2" style="pointer-events: auto;">
       <%= message %>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

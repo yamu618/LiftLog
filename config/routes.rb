@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # 固定ページ
   get "/terms", to: "pages#terms", as: :terms
   get "/privacy", to: "pages#privacy", as: :privacy
+  get "/how_to", to: "pages#how_to", as: :how_to
 
   # リソース
   resources :exercises, only: %i[index edit create update destroy]

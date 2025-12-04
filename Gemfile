@@ -63,7 +63,7 @@ gem 'groupdate', '~> 6.5'
 # gem 'sassc-rails', '~> 2.1'
 
 # 環境変数管理
-gem "dotenv-rails", '~> 3.1.8'
+gem "dotenv-rails", '~> 3.2.0'
 
 # DB
 gem "annotate"

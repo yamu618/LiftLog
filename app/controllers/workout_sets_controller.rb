@@ -19,7 +19,7 @@ class WorkoutSetsController < ApplicationController
       @workout = @set.workout
 
       respond_to do |format|
-        format.turbo_stream { render :update_failed, status: :unprocessable_entity } 
+        format.turbo_stream { render :update_failed, status: :unprocessable_entity }
       end
     end
   end

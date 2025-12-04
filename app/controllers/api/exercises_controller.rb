@@ -7,13 +7,13 @@ class Api::ExercisesController < ApplicationController
 
     return render json: [] if query.blank?
 
-    query_kana = query.tr('ぁ-ん', 'ァ-ン')
+    query_kana = query.tr("ぁ-ん", "ァ-ン")
 
     exercises = current_user.exercises
-                            .where(category_id: category_id)
-                            .where("name LIKE ?", "#{query_kana}%")
-                            .order(:name)
-                            .limit(10)
+      .where(category_id: category_id)
+      .where("name LIKE ?", "#{query_kana}%")
+      .order(:name)
+      .limit(10)
 
     render json: exercises.pluck(:name)
   end

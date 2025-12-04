@@ -85,9 +85,7 @@ class WorkoutsController < ApplicationController
         previous_best_distance: previous_best_distance
       )
 
-      if amount.present?
-        flash[:personal_best_create] = { amount: amount, type: type }
-      end
+      flash[:personal_best_create] = { amount: amount, type: type } if amount.present?
 
       redirect_to workout_path(@workout), notice: "#{@sets.size}件のセットを追加しました"
     else
@@ -134,22 +132,21 @@ class WorkoutsController < ApplicationController
 
     total_days = current_user.workouts.select(:performed_on).distinct.count
 
-    if total_days >= 365 && total_days % 365 == 0
+    if total_days >= 365 && (total_days % 365).zero?
       flash[:training_milestone] = milestone_message(total_days)
       return
     end
 
-    milestones = [1, 10, 30, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000]
+    milestones = [1, 10, 30, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900,
+                  950, 1000]
 
-    if milestones.include?(total_days)
-      flash[:training_milestone] = milestone_message(total_days)
-    end
+    flash[:training_milestone] = milestone_message(total_days) if milestones.include?(total_days)
   end
 
   def milestone_message(days)
     if days == 1
       "初めまして！ LiftLogはあなたのトレーニングを全力でサポートします。"
-    elsif days % 365 == 0
+    elsif (days % 365).zero?
       years = days / 365
       "おめでとうございます！ 総トレーニング日数が#{days}日（#{years}年）を突破しました🔥 これからもLiftLogが伴走し続けます。"
     else
@@ -162,8 +159,8 @@ class WorkoutsController < ApplicationController
     user = workout.user
 
     all_sets = WorkoutSet.joins(workout: :exercise)
-                        .where(workouts: { user_id: user.id },
-                                exercises: { id: exercise.id })
+      .where(workouts: { user_id: user.id },
+             exercises: { id: exercise.id })
 
     if exercise.category.name == "有酸素"
       max_distance = all_sets.maximum(:distance) || 0
@@ -181,6 +178,6 @@ class WorkoutsController < ApplicationController
       end
     end
 
-    return [nil, nil]
+    [nil, nil]
   end
 end

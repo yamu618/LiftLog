@@ -58,6 +58,11 @@ jobs:
       - name: Run Rubocop
         run: bundle exec rubocop
 
+      - name: Start Rails Server
+        run: |
+          bundle exec rails s -e test -b 0.0.0.0 -p 3000 & 
+          sleep 5
+
       - name: Run RSpec
         run: bundle exec rspec
 

@@ -1,8 +1,5 @@
 require "capybara/rails"
-require 'webdrivers'
-
-Webdrivers.logger.level = :debug
-Webdrivers::Chromedriver.required_version = false
+require "selenium-webdriver"
 
 Capybara.configure do |config|
   config.default_max_wait_time = 10

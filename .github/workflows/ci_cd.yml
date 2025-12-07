@@ -26,7 +26,6 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:password@localhost:5432/testdb
-      WEBDRAIVERS_CACHE_DIR: /tmp/webdrivers_cache
 
     steps:
       - uses: actions/checkout@v3

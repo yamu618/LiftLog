@@ -13,7 +13,7 @@ Capybara.register_driver :remote_chrome_docker do |app|
   Capybara::Selenium::Driver.new(
     app,
     browser: :remote,
-    url: ENV.fetch("http://chrome:4444/wd/hub"),
+    url: "http://chrome:4444/wd/hub",
     options: options
   )
 end

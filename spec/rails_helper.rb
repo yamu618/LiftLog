@@ -5,8 +5,6 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
-Capybara.server = :none
-require 'webdrivers'
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
@@ -44,7 +42,7 @@ RSpec.configure do |config|
     Capybara.server_port = 3000
 
     if ENV['CI']
-      driven_by :selenium_chrome
+      driven_by :selenium_chrome_headless
       Capybara.app_host = 'http://localhost:3000'
     else
       driven_by :remote_chrome_docker

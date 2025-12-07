@@ -25,7 +25,7 @@ end
 
 Capybara.register_driver :remote_chrome_docker do |app|
   options = Selenium::WebDriver::Chrome::Options.new(
-    args: %w[--no-sandbox --disable-gpu --window-size=1680,1050 --disable-dev-shm-usage]
+    args: %w[--no-sandbox --disable-gpu --headless=new --window-size=1680,1050 --disable-dev-shm-usage]
   )
   
   Capybara::Selenium::Driver.new(

@@ -4,8 +4,8 @@ require "selenium-webdriver"
 Capybara.configure do |config|
   config.default_max_wait_time = 30
 
-  config.default_driver = :remote_chrome
-  config.javascript_driver = :remote_chrome
+  config.default_driver = :remote_chrome_docker
+  config.javascript_driver = :remote_chrome_docker
 end
 
 Capybara.register_driver :remote_chrome_docker do |app|

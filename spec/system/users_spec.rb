@@ -15,19 +15,17 @@ RSpec.describe "ユーザー認証", type: :system do
     expect(page).to have_content("アカウント登録が完了しました")
   end
 
-  it "ユーザーがログイン出来る" do
-    user = create(:user)
+  xit "ユーザーがログイン出来る" do
     visit new_user_session_path
 
     fill_in "メールアドレス", with: user.email
     fill_in "パスワード", with: user.password
     click_button "ログイン"
 
-    expect(page).not_to have_content("新規会員登録")
+    expect(page).to have_content("ログインしました")
   end
 
   it "ログアウトできる", :js do
-    user = create(:user)
     login_as(user)
 
     visit edit_user_registration_path

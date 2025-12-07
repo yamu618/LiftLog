@@ -58,11 +58,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: yarn esbuild app/javascript/application.js \
-             --bundle \
-             --sourcemap \
-             --outfile=public/assets/application.js \
-             --watch
+    command: ["yarn", "esbuild", "app/javascript/application.js", "--bundle", "--sourcemap", "--outfile=public/assets/application.js", "--watch"]
     volumes:
       - .:/myapp
     working_dir: /myapp

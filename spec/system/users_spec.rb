@@ -7,7 +7,7 @@ RSpec.describe "ユーザー認証", type: :system do
     visit new_user_registration_path
 
     fill_in "ユーザー名", with: "testuser"
-    fill_in "メールアドレス", with: "test@example.com"
+    fill_in "メールアドレス", with: "user_#{SecureRandom.hex(4)}@example.com"
     fill_in "パスワード", with: "password123"
     fill_in "パスワード（確認）", with: "password123"
     click_button "登録する"
@@ -28,13 +28,9 @@ RSpec.describe "ユーザー認証", type: :system do
 
   it "ログアウトできる", :js do
     user = create(:user)
-    visit new_user_session_path
+    login_as(user)
 
-    fill_in "メールアドレス", with: user.email
-    fill_in "パスワード", with: user.password
-    click_button "ログイン"
-
-    expect(page).to have_current_path(root_path)
+    visit edit_user_registration_path
     expect(page).to have_link "ログアウト"
 
     accept_confirm do

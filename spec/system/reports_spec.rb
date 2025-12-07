@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Reports", type: :system do
   let(:user) { create(:user) }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "ワークアウトセット管理（Turbo Frame）", type: :system, js: true do
+RSpec.describe "ワークアウトセット管理（Turbo Frame）", :js, type: :system do
   let(:user) { create(:user) }
   let!(:category) { create(:category) }
   let!(:exercise) { create(:exercise, category: category, user: user) }

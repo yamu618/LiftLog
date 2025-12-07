@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "種目管理（Turbo対応）", type: :system, js: true do
+RSpec.describe "種目管理（Turbo対応）", :js, type: :system do
   let(:user) { create(:user) }
   let!(:category) { create(:category) }
 

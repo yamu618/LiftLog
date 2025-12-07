@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "ワークアウト管理", type: :system, js: true do
+RSpec.describe "ワークアウト管理", :js, type: :system do
   let(:user) { create(:user) }
   let!(:category) { create(:category, name: "カテゴリー1") }
   let!(:exercise) { create(:exercise, user: user, category: category) }
@@ -35,7 +35,7 @@ RSpec.describe "ワークアウト管理", type: :system, js: true do
 
     it "種目未入力でエラーになる" do
       visit new_workout_path
-      
+
       click_button "作成"
 
       expect(page).to have_content("種目を選択してください。")

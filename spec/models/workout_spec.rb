@@ -23,42 +23,42 @@
 #  fk_rails_...  (exercise_id => exercises.id)
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Workout, type: :model do
-  describe 'アソシエーション' do
-    it 'user に属している' do
+  describe "アソシエーション" do
+    it "user に属している" do
       assoc = described_class.reflect_on_association(:user)
       expect(assoc.macro).to eq :belongs_to
     end
 
-    it 'exercise に属している' do
+    it "exercise に属している" do
       assoc = described_class.reflect_on_association(:exercise)
       expect(assoc.macro).to eq :belongs_to
     end
 
-    it 'workout_sets を複数持つ' do
+    it "workout_sets を複数持つ" do
       assoc = described_class.reflect_on_association(:workout_sets)
       expect(assoc.macro).to eq :has_many
     end
   end
 
-  describe 'バリデーション' do
-    it 'performed_on が必須' do
+  describe "バリデーション" do
+    it "performed_on が必須" do
       workout = build(:workout, performed_on: nil)
       expect(workout).not_to be_valid
     end
   end
 
-  describe 'インスタンスメソッド' do
-    it 'total_weight が合計を返す' do
+  describe "インスタンスメソッド" do
+    it "total_weight が合計を返す" do
       workout = create(:workout)
       create(:workout_set, workout:, weight: 10, reps: 5)
 
       expect(workout.total_weight).to eq(50)
     end
 
-    it 'total_distance の合計が返る' do
+    it "total_distance の合計が返る" do
       workout = create(:workout)
       create(:workout_set, workout:, distance: 300)
       create(:workout_set, workout:, distance: 200)
@@ -66,7 +66,7 @@ RSpec.describe Workout, type: :model do
       expect(workout.total_distance).to eq(500)
     end
 
-    it 'total_duration の合計が返る' do
+    it "total_duration の合計が返る" do
       workout = create(:workout)
       create(:workout_set, workout:, duration: 60)
       create(:workout_set, workout:, duration: 30)

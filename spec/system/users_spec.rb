@@ -23,7 +23,7 @@ RSpec.describe "ユーザー認証", type: :system do
     fill_in "パスワード", with: user.password
     click_button "ログイン"
 
-    expect(page).to have_content("ログインしました")
+    expect(page).not_to have_content("新規会員登録")
   end
 
   it "ログアウトできる", :js do

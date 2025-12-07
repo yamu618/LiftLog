@@ -39,15 +39,15 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :remote_chrome
     
-    if ENV['GITHUB_ACTIONS']
-      Capybara.server_host = '0.0.0.0'
-      Capybara.server_port = 3000
-      Capybara.app_host = "http://127.0.0.1:3000" 
-    else
-      Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-      Capybara.server_port = 4444
-      Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
-    end
+    #if ENV['GITHUB_ACTIONS']
+    #  Capybara.server_host = '0.0.0.0'
+    #  Capybara.server_port = 3000
+    #  Capybara.app_host = "http://127.0.0.1:3000" 
+    #else
+    #  Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+    #  Capybara.server_port = 4444
+    #  Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+    #end
 
     Capybara.ignore_hidden_elements = false
   end

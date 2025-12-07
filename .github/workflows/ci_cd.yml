@@ -27,7 +27,7 @@ jobs:
         image: selenium/standalone-chrome:latest
         ports: ["4444:4444"]
         options: >-
-          --shm-size 2g # メモリ不足による不安定化を防ぐ
+          --shm-size 2g
 
     env:
       RAILS_ENV: test
@@ -37,7 +37,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:

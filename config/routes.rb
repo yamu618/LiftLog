@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => "/admin", as: "rails_admin"
 
   # Devise（ユーザー認証）
-  devise_for :users, controllers: { 
-    registrations: 'users/registrations',
-    omniauth_callbacks: 'users/omniauth_callbacks'
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
 
   # 固定ページ
@@ -34,9 +34,7 @@ Rails.application.routes.draw do
   end
 
   # 開発用メール確認
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
-  end
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   # その他のページ
   get "home/index"

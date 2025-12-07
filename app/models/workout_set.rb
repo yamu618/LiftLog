@@ -49,8 +49,8 @@ class WorkoutSet < ApplicationRecord
     exercise = workout.exercise
 
     all_sets = WorkoutSet.joins(workout: :exercise)
-                         .where(workouts: { user_id: workout.user_id},
-                                exercises: { id: exercise.id })
+      .where(workouts: { user_id: workout.user_id },
+             exercises: { id: exercise.id })
 
     if exercise.category.name == "有酸素"
       max_distance = all_sets.maximum(:distance)

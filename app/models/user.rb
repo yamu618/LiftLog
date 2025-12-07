@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true,
                        length: { maximum: 20 }
-  validates :uid, uniqueness: { scope: :provider}, if: :sns_user?
+  validates :uid, uniqueness: { scope: :provider }, if: :sns_user?
 
   after_create :copy_default_exercises
 
@@ -46,9 +46,9 @@ class User < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    #SNSから取得した名前の補正
+    # SNSから取得した名前の補正
     raw_name = auth.info.name.to_s.strip
-    username = raw_name[0...20] 
+    username = raw_name[0...20]
 
     # providerとuidでユーザーを検索 or 作成
     User.find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|

@@ -13,6 +13,7 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
 RSpec.configure do |config|
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
@@ -21,6 +22,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # Deviseヘルパーメソッド
   config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Warden::Test::Helpers
   config.before(:suite) { Warden.test_mode! }
 
@@ -36,10 +38,19 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system) do
-    driven_by :remote_chrome
-    Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-    Capybara.server_port = 4444
-    Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+    Capybara.server_host = '0.0.0.0'
+    Capybara.server_port = 3000
+
+    if ENV['CI']
+      driven_by :selenium_chrome_headless
+      Capybara.app_host = 'http://localhost:3000'
+    else
+      driven_by :remote_chrome_docker
+      Capybara.app_host = 'http://web:3000'
+    end
+
     Capybara.ignore_hidden_elements = false
   end
+
+  config.include ActionView::RecordIdentifier, type: :system
 end

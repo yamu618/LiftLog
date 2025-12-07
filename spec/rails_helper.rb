@@ -38,6 +38,7 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :selenium_chrome_headless
+    Capybara.server_host = '0.0.0.0'
 
     Capybara.ignore_hidden_elements = false
   end

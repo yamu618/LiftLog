@@ -23,19 +23,18 @@ jobs:
           --health-timeout=5s
           --health-retries=5
 
-      selenium:
-        image: selenium/standalone-chrome:116.0
-        ports: ["4444:4444"]
-
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:password@localhost:5432/testdb
+      WEBDRAIVERS_CACHE_DIR: /tmp/webdrivers_cache
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Install Google Chrome
         uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: '116'
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1

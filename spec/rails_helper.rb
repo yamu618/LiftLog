@@ -21,6 +21,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # Deviseヘルパーメソッド
   config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Warden::Test::Helpers
   config.before(:suite) { Warden.test_mode! }
 
@@ -42,4 +43,6 @@ RSpec.configure do |config|
     Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
     Capybara.ignore_hidden_elements = false
   end
+
+  config.include ActionView::RecordIdentifier, type: :system
 end

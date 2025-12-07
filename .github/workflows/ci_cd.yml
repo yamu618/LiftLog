@@ -33,7 +33,7 @@ jobs:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:password@localhost:5432/testdb
       CI: true
-      SELENIUM_DRIVER_URL: http://chrome:4444/wd/hub
+      SELENIUM_DRIVER_URL: http://localhost:4444/wd/hub
 
     steps:
       - uses: actions/checkout@v3

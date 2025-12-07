@@ -46,7 +46,7 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     if ENV['CI']
-      driven_by :remote_chrome_docker
+      driven_by :remote_chrome
       Capybara.app_host = "http://localhost:3000"
       Capybara.server_host = '0.0.0.0'
       Capybara.server_port = 3000

@@ -23,10 +23,14 @@ jobs:
           --health-timeout=5s
           --health-retries=5
 
+      selenium:
+        image: selenium/standalone-chrome:116.0
+        ports: ["4444:4444"]
+
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:password@localhost:5432/testdb
-      WEBDRIVERS_CACHE_DIR: $HOME/.webdrivers
+      SELENIUM_DRIVER_URL: http://selenium:4444/wd/hub
 
     steps:
       - uses: actions/checkout@v3
@@ -47,17 +51,6 @@ jobs:
 
       - name: Prepare DB
         run: bundle exec rails db:schema:load
-
-      - name: Install Chrome
-        run: sudo apt-get update && sudo apt-get install -y google-chrome-stable
-
-      - name: Install ChromeDriver
-        run: |
-          CHROME_VERSION=$(google-chrome --version | cut -d' ' -f3 | cut -d'.' -f1)
-          wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/${CHROME_VERSION}.0/chromedriver_linux64.zip
-          unzip /tmp/chromedriver.zip -d $HOME/.webdrivers/
-          chmod +x $HOME/.webdrivers/chromedriver
-          export PATH=$HOME/.webdrivers:$PATH
 
       - name: Run Rubocop
         run: bundle exec rubocop

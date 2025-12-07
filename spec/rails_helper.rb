@@ -40,10 +40,9 @@ RSpec.configure do |config|
     driven_by :remote_chrome
     
     if ENV['GITHUB_ACTIONS']
-      driven_by :selenium_chrome_headless, screen_size: [1680, 1050]
       Capybara.server_host = '0.0.0.0'
       Capybara.server_port = 3000
-      Capybara.app_host = "http://localhost:3000"
+      Capybara.app_host = "http://127.0.0.1:3000" 
     else
       Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
       Capybara.server_port = 4444

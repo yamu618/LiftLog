@@ -49,13 +49,6 @@ jobs:
       - name: Install Yarn packages
         run: yarn install --frozen-lockfile
 
-      - name: Wait for Selenium service
-        uses: nev7n/wait_for_service@v1
-        with:
-          host: selenium
-          port: 4444
-          timeout: 60s
-
       - name: Prepare DB
         run: bundle exec rails db:schema:load
 

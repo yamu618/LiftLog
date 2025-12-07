@@ -22,7 +22,9 @@ RSpec.describe "ワークアウトセット管理（Turbo Frame）", :js, type: 
         click_button "登録"
       end
 
-      expect(page).to have_content("セットを追加しました")
+      expect(page).to have_content("重量: 50.0kg")
+
+      expect(current_path).to eq(workout_path(workout))
       expect(WorkoutSet.last.reload.weight).to eq(50)
       expect(WorkoutSet.last.reload.reps).to eq(10)
     end

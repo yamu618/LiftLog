@@ -5,6 +5,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
+Capybara.server = :none
 require 'webdrivers'
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
@@ -13,12 +14,6 @@ begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
-end
-
-if ENV['CI']
-  Webdrivers::Chromedriver.required_version = false
-else
-  Webdrivers::Chromedriver.update
 end
 
 RSpec.configure do |config|
@@ -44,21 +39,16 @@ RSpec.configure do |config|
     Time.zone = "Asia/Tokyo"
   end
 
-  config.before(:suite) do
-    Capybara.server = :none 
-  end
-
   config.before(:each, type: :system) do
+    Capybara.server_host = '0.0.0.0'
+    Capybara.server_port = 3000
+
     if ENV['CI']
-      driven_by :remote_chrome_docker
-      Capybara.app_host = "http://localhost:3000"
-      Capybara.server_host = '0.0.0.0'
-      Capybara.server_port = 3000
-    else
       driven_by :selenium_chrome
       Capybara.app_host = 'http://localhost:3000'
-      Capybara.server_host = 'localhost' 
-      Capybara.server_port = 3000
+    else
+      driven_by :remote_chrome_docker
+      Capybara.app_host = 'http://web:3000'
     end
 
     Capybara.ignore_hidden_elements = false

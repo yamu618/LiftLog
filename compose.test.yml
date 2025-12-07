@@ -7,7 +7,6 @@ services:
   web:
     environment:
       RAILS_ENV: test
-      CI: "true" 
       SELENIUM_DRIVER_URL: http://chrome:4444/wd/hub
     command: bash -c "bundle exec rails db:create && bundle exec rails db:schema:load && bundle exec rails db:test:prepare && tail -f /dev/null"
     ports: []

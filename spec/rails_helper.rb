@@ -44,10 +44,12 @@ RSpec.configure do |config|
     Time.zone = "Asia/Tokyo"
   end
 
+  config.before(:suite) do
+    Capybara.server = :none 
+  end
+
   config.before(:each, type: :system) do
     if ENV['CI']
-      Capybara.server = :none
-      
       driven_by :remote_chrome_docker
       Capybara.app_host = "http://localhost:3000"
       Capybara.server_host = '0.0.0.0'

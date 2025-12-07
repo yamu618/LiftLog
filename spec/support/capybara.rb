@@ -1,7 +1,14 @@
 require "capybara/rails"
 require "selenium-webdriver"
 
-Capybara.register_driver :remote_chrome do |app|
+Capybara.configure do |config|
+  config.default_max_wait_time = 10
+
+  config.default_driver = :selenium_chrome_headless 
+  config.javascript_driver = :selenium_chrome_headless
+end
+
+Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument("--no-sandbox")
   options.add_argument("--headless")
@@ -11,14 +18,7 @@ Capybara.register_driver :remote_chrome do |app|
 
   Capybara::Selenium::Driver.new(
     app,
-    browser: :remote,
-    url: ENV["SELENIUM_DRIVER_URL"] || "http://chrome:4444/wd/hub",
-    capabilities: options
+    browser: :chrome,
+    options: options
   )
-end
-
-Capybara.configure do |config|
-  config.default_max_wait_time = 10
-  config.default_driver = :remote_chrome
-  config.javascript_driver = :remote_chrome
 end

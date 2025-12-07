@@ -30,10 +30,12 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:password@localhost:5432/testdb
-      SELENIUM_DRIVER_URL: http://selenium:4444/wd/hub
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install Google Chrome
+        uses: browser-actions/setup-chrome@v1
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1

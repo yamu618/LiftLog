@@ -37,12 +37,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :system) do
-    driven_by :remote_chrome
-
-    Capybara.server_host = '0.0.0.0'
-    Capybara.server_port = 3000
-    Capybara.app_host = "http://host.docker.internal:3000"
-    Capybara.default_max_wait_time = 15
+    driven_by :selenium_chrome_headless
 
     Capybara.ignore_hidden_elements = false
   end

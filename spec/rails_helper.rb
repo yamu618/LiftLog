@@ -38,10 +38,14 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     if ENV['GITHUB_ACTIONS']
-      driven_by :selenium, using: :chrome, screen_size: [1400,1400],
-        options: Selenium::WebDriver::Chrome::Options.new(
-          args: %w[headless disable-gpu no-sandbox disable-dev-shm-usage]
-        )
+      options = Selenium::WebDriver::Chrome::Options.new
+      options.add_argument("--headless")
+      options.add_argument("--disable-gpu")
+      options.add_argument("--no-sandbox")
+      options.add_argument("--disable-dev-shm-usage")
+      options.add_argument("--window-size=1400,1400")
+
+      driven_by :selenium, using: :chrome, screen_size: [1400,1400], options: options
     else
       driven_by :remote_chrome
       Capybara.server_host = IPSocket.getaddress(Socket.gethostname)

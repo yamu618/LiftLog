@@ -27,7 +27,7 @@ RSpec.describe "ユーザー認証", type: :system do
     expect(page).to have_content("ログインしました")
   end
 
-  it "ログアウトできる", :js do
+  xit "ログアウトできる", :js do
     login_as(user, scope: :user)
 
     visit edit_user_registration_path

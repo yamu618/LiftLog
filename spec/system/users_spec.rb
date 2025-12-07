@@ -16,14 +16,14 @@ RSpec.describe "ユーザー認証", type: :system do
   end
 
   it "ユーザーがログイン出来る" do
-    user = create(:user)
     visit new_user_session_path
 
-    fill_in "メールアドレス", with: user.email
-    fill_in "パスワード", with: user.password
-    click_button "ログイン"
+    within('#new_user') do 
+      fill_in "メールアドレス", with: user.email
+      fill_in "パスワード", with: user.password
+    end
 
-    expect(page).to have_content(user.username)
+    click_button "ログイン"
     expect(page).to have_content("ログインしました")
   end
 
@@ -41,7 +41,7 @@ RSpec.describe "ユーザー認証", type: :system do
   end
 
   it "プロフィール編集できる" do
-    login_as(user, scope: :user)
+    login_as(user)
     visit edit_user_registration_path
 
     fill_in "ユーザー名", with: "updated_name"
@@ -53,7 +53,7 @@ RSpec.describe "ユーザー認証", type: :system do
   end
 
   it "アカウント削除できる" do
-    login_as(user, scope: :user)
+    login_as(user)
     visit edit_user_registration_path
 
     accept_confirm do

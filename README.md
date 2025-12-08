@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/images/liftlog_ogp.png" width="800">
+  <img src="app/assets/images/liftlog_ogp.png" width="800">
 </p>
 
 # 💪 LiftLog - シンプルで継続しやすい筋トレ管理アプリ

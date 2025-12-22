@@ -1,6 +1,29 @@
 <% content_for :title, "LiftLog - トレーニングレポート" %>
 
-<div class="container mt-2">
+<div class="container mt-2 reports">
+  <style>
+    .reports .card-header { background: #fff !important; color: #212529 !important; border-bottom: 1px solid #e9ecef; }
+    .reports h2 { font-size: 1.375rem; }
+
+    .reports .stat-row { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: nowrap; overflow:auto; }
+    .reports .stat { min-width: 120px; background: #f8f9fa; padding: .6rem .75rem; border-radius: .5rem; box-shadow: none; }
+    .reports .stat p.label { color: #6c757d; margin-bottom: .25rem; font-size: .9rem; }
+    .reports .stat h3 { margin: 0; font-size: 1.125rem; }
+
+    .reports .nav-pills .nav-link { border-radius: .5rem; margin-right: .25rem; }
+    .reports .ex-btn { padding: .25rem .6rem; border-radius: .5rem; }
+
+    .reports .chart-card { padding: .75rem; border: 1px solid #e9ecef; border-radius: .5rem; background: #fff; }
+
+    .reports .personal-best { text-align: center; padding: .75rem; }
+    .reports .personal-best .best-value { font-size: 1.25rem; font-weight: 700; }
+
+    @media (max-width: 576px) {
+      .reports .stat-row { gap: .5rem; }
+      .reports .stat { min-width: 100px; }
+      .reports .chart-card { padding: .5rem; }
+    }
+  </style>
   <h2 class="mb-4">トレーニングレポート</h2>
 
   <div class="card mb-4 shadow-sm">
@@ -8,24 +31,24 @@
       <strong>トレーニング日数</strong>
     </div>
     <div class="card-body">
-      <div class="d-flex justify-content-center flex-nowrap overflow-auto text-center">
-        <div class="p-2 flex-shrink-0" style="min-width: 120px;">
-          <p class="text-muted mb-1 fs-6">総日数</p>
-          <h3 class="fw-bold fs-5"><%= @total_days %> 日</h3>
+      <div class="stat-row">
+        <div class="stat text-center">
+          <p class="label">総日数</p>
+          <h3 class="fw-bold"><%= @total_days %> 日</h3>
         </div>
 
-        <div class="p-2 flex-shrink-0" style="min-width: 120px;">
-          <p class="text-muted mb-1 fs-6">今週</p>
-          <h3 class="fw-bold fs-5"><%= @this_week_days %> 日</h3>
-          <p class="<%= @week_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %> fs-6">
+        <div class="stat text-center">
+          <p class="label">今週</p>
+          <h3 class="fw-bold"><%= @this_week_days %> 日</h3>
+          <p class="<%= @week_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
             （前週比 <%= @week_days_diff >= 0 ? '+' : '' %><%= @week_days_diff %>）
           </p>
         </div>
 
-        <div class="p-2 flex-shrink-0" style="min-width: 120px;">
-          <p class="text-muted mb-1 fs-6">今月</p>
-          <h3 class="fw-bold fs-5"><%= @this_month_days %> 日</h3>
-          <p class="<%= @month_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %> fs-6">
+        <div class="stat text-center">
+          <p class="label">今月</p>
+          <h3 class="fw-bold"><%= @this_month_days %> 日</h3>
+          <p class="<%= @month_days_diff >= 0 ? 'text-success fw-semibold' : 'text-danger fw-semibold' %>">
             （前月比 <%= @month_days_diff >= 0 ? '+' : '' %><%= @month_days_diff %>）
           </p>
         </div>
@@ -39,7 +62,7 @@
     </div>
     <div class="card-body">
       <turbo-frame id="category_tabs_and_exercises">
-        <ul class="nav nav-tabs mb-3 flex-wrap">
+        <ul class="nav nav-pills mb-3 flex-wrap">
           <% @categories.each do |category| %>
             <li class="nav-item">
               <%= link_to category.name,
@@ -55,13 +78,14 @@
           <% exercises.each do |exercise| %>
             <%= link_to exercise.name,
                         reports_path(exercise_id: exercise.id, category_id: @selected_category.id),
-                        class: "btn btn-outline-primary btn-sm",
+                        class: "btn btn-outline-primary btn-sm ex-btn",
                         data: { turbo_frame: "chart" } %>
           <% end %>
         </div>
       </turbo-frame>
 
       <%= turbo_frame_tag "chart" do %>
+        <div class="chart-card">
         <% if @chart_data_rounded.present? %>
           <%= line_chart @chart_data_rounded,
                 loading: "読み込み中です...",
@@ -73,7 +97,7 @@
                     rules: [{
                       condition: { maxWidth: 500 },
                       chartOptions: { legend: { enabled: false },
-                                      yAxis: { labels: { style: { fontSize: '10px' } } } }
+                                      yAxis: { labels: { style: { fontSize: '10px' } } } } 
                           }]
                         }
                       } %>
@@ -82,6 +106,7 @@
             種目を選択するとグラフが表示されます。
           </p>
         <% end %>
+        </div>
       <% end %>
     </div>
   </div>
@@ -92,7 +117,7 @@
     </div>
     <div class="card-body">
       <turbo-frame id="category_tabs_and_exercises_personal_best">
-        <ul class="nav nav-tabs mb-3 flex-wrap">
+        <ul class="nav nav-pills mb-3 flex-wrap">
           <% @categories.each do |category| %>
             <li class="nav-item">
               <%= link_to category.name,
@@ -116,21 +141,21 @@
 
       <turbo-frame id="personal_best">
         <% if @selected_exercise.present? %>
-          <div class="border-top pt-3">
-            <h5 class="fw-bold mb-1 text-center"><%= @selected_exercise.name %></h5>
+          <div class="personal-best border-top pt-3">
+            <h5 class="fw-bold mb-1"><%= @selected_exercise.name %></h5>
 
             <% if @selected_category.name == "有酸素" %>
               <% if @exercise_best.present? %>
-                <p class="fs-5 fw-bold mb-0 text-center">
-                  自己ベストは<%= @exercise_best.round(2) %>kmです🔥
+                <p class="best-value mb-0 text-center text-primary">
+                  自己ベストは <%= @exercise_best.round(2) %> km 🔥
                 </p>
               <% else %>
                 <p class="text-muted mb-0">この種目には記録がありません。</p>
               <% end %>
             <% else %>
               <% if @exercise_best.present? %>
-                <p class="fs-5 fw-bold mb-0 text-center">
-                  自己ベストは<%= @exercise_best.round(2) %>kgです🔥
+                <p class="best-value mb-0 text-center text-primary">
+                  自己ベストは <%= @exercise_best.round(2) %> kg 🔥
                 </p>
               <% else %>
                 <p class="text-muted mb-0">この種目には記録がありません。</p>
@@ -138,9 +163,9 @@
             <% end %>
           </div>
         <% else %>
-          <p class="text-muted text-center mb-0">
-            種目を選択すると自己ベストが表示されます。
-          </p>
+          <div class="chart-card text-center">
+            <p class="text-muted mb-0">種目を選択すると自己ベストが表示されます。</p>
+          </div>
         <% end %>
       </turbo-frame>
     </div>

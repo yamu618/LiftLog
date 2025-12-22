@@ -1,4 +1,8 @@
 <div class="simple-calendar">
+  <style>
+    .simple-calendar td.saturday:not(.bg-light) { background-color: #e6f7ff !important; }
+    .simple-calendar td.sunday:not(.bg-light) { background-color: #ffe6ee !important; }
+  </style>
   <h5 class="mb-2"><%= @start_date.strftime("%Y年 %-m月") %></h5>
 
   <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
@@ -15,8 +19,11 @@
     <table class="table table-bordered text-center mb-0">
       <thead>
         <tr>
-          <% ['日', '月', '火', '水', '木', '金', '土'].each do |day_name| %>
-            <th class="p-1"><%= day_name %></th>
+          <% ['日', '月', '火', '水', '木', '金', '土'].each_with_index do |day_name, idx| %>
+            <% th_class = 'p-1'
+               th_class += ' sunday' if idx == 0
+               th_class += ' saturday' if idx == 6 %>
+            <th class="<%= th_class %>"><%= day_name %></th>
           <% end %>
         </tr>
       </thead>
@@ -28,7 +35,11 @@
         <% date_range.each_slice(7) do |week| %>
           <tr>
             <% week.each do |day| %>
-              <td class="p-1 <%= 'bg-light' if day.month != @start_date.month %>">
+                <% cell_classes = ['p-1']
+                  cell_classes << 'bg-light' if day.month != @start_date.month
+                  cell_classes << 'saturday' if day.saturday?
+                  cell_classes << 'sunday' if day.sunday? %>
+                <td class="<%= cell_classes.join(' ') %>">
                 <%= link_to workouts_path(date: day, start_date: @start_date.beginning_of_month),
                     class: "d-block text-decoration-none #{'bg-primary-subtle border-primary' if day == @selected_date} #{'text-muted' if day.month != @start_date.month}" do %>
                   <div class="fw-bold"><%= day.day %></div>

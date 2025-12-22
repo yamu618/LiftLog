@@ -19,10 +19,30 @@
 <% end %>
 
 <turbo-frame id="calendar_and_workouts">
-  <div class="container mt-2">
+  <div class="container mt-2 top-page">
+    <style>
+      .top-page h2 { font-size: 1.5rem; margin-bottom: .75rem; }
+      .top-page .card-header { background: #fff !important; color: #212529 !important; border-bottom: 1px solid #e9ecef; }
+      .top-page .card { border-radius: .6rem; }
+      .top-page .workout-card .card-body { padding: .75rem !important; }
+      .top-page .workout-stats { font-size: .85rem; color: #6c757d; }
+      .top-page .workout-actions .btn { padding-top: .4rem; padding-bottom: .4rem; }
+      .top-page .month-calendar-wrap { margin-bottom: 1rem; }
+
+      @media (min-width: 992px) {
+        .top-page .workout-card .card-title { font-size: 1.125rem; }
+        .top-page .workout-stats { display: flex; flex-wrap: nowrap; align-items: center; gap: 1rem; font-size: .95rem; }
+        .top-page .workout-stats span { margin: 0; }
+        .top-page .workout-stats strong { font-size: .95rem; }
+      }
+
+      @media (max-width: 576px) {
+        .top-page h2 { font-size: 1.25rem; }
+      }
+    </style>
     <h2 class="mb-3"><%= @workout_title %></h2>
 
-    <div class="mb-4">
+    <div class="mb-4 month-calendar-wrap">
       <%= month_calendar(events: @all_workouts, attribute: :performed_on, start_date: @start_date) do |date, workouts| %>
         <%= render 'month_calendar', 
             start_date: @start_date, 
@@ -35,11 +55,11 @@
     <div>
       <% if @workouts.any? %>
         <% @workouts.each do |workout| %>
-          <div id="<%= dom_id(workout) %>" class="card mb-2 shadow-sm">
+          <div id="<%= dom_id(workout) %>" class="card mb-2 shadow-sm workout-card">
             <div class="card-body p-2">
               <h6 class="card-title mb-1 fw-bold"><%= workout.exercise.name %></h6>
 
-              <div class="d-flex flex-wrap gap-2 mb-2 small text-secondary">
+              <div class="d-flex flex-wrap gap-2 mb-2 small workout-stats">
                 <span><strong>カテゴリ:</strong> <%= workout.exercise.category.name %></span>
                 <span><strong>セット:</strong> <%= workout.workout_sets.count %></span>
 
@@ -51,11 +71,11 @@
                 <% end %>
               </div>
 
-              <div class="d-flex justify-content-end gap-1">
-                <%= link_to "セット管理", workout_path(workout, start_date: @start_date.beginning_of_month), class: "btn btn-sm btn-primary", data: { turbo: false } %>
+              <div class="d-flex gap-1 workout-actions">
+                <%= link_to "セット管理", workout_path(workout, start_date: @start_date.beginning_of_month), class: "btn btn-sm btn-primary w-50", data: { turbo: false } %>
                 <%= link_to "削除", workout_path(workout, start_date: @start_date.beginning_of_month),
                             data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
-                            class: "btn btn-sm btn-danger" %>
+                            class: "btn btn-sm btn-danger w-50" %>
               </div>
             </div>
           </div>

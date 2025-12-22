@@ -1,11 +1,31 @@
 <% content_for :title, "LiftLog - 種目管理" %>
 
 <turbo-frame id="category_tabs_and_exercises">
-  <div class="container mt-2">
+  <div class="container mt-2 exercises-page">
+    <style>
+      .exercises-page h2 { font-size: 1.5rem; margin-bottom: .75rem; }
+      .exercises-page .card-header { background: #fff !important; color: #212529 !important; border-bottom: 1px solid #e9ecef; }
+      .exercises-page .add-card { border-radius: .6rem; box-shadow: none !important; border: 1px solid #e6f8ef !important; }
+      .exercises-page .add-card .card-header { background: #e6f8ef !important; color: #0b5ea8 !important; border-bottom: none; border-top-left-radius: .6rem; border-top-right-radius: .6rem; }
+      .exercises-page .add-card { border-radius: .6rem; box-shadow: 0 1px 3px rgba(11,94,168,0.06); border: 1px solid rgba(13,110,253,0.06); background: transparent; }
+      .exercises-page .add-card .card-header { background: #0d6efd !important; color: #fff !important; border-bottom: none; padding: .45rem .75rem; font-weight: 700; }
+      .exercises-page .add-card .card-body { background: #f1f8ff; border: none; padding: .75rem .75rem; }
+      .exercises-page .nav-pills .nav-link { border-radius: .4rem; margin-right: .25rem; }
+
+      .exercises-page .list-group-item { background: #fff; border: 1px solid #eef3f7; border-radius: .5rem; margin-bottom: .5rem; }
+      .exercises-page .exercise-name { font-weight: 700; font-size: 1.05rem; color: #000; }
+      .exercises-page .list-group-item .btn { box-shadow: none; }
+      .exercises-page .list-group-item .btn-sm { padding: .25rem .5rem; }
+
+      @media (max-width: 576px) {
+        .exercises-page .exercise-name { font-size: 1rem; }
+      }
+    </style>
+
     <h2 class="mb-3">種目管理</h2>
 
-    <div class="card shadow-sm mb-3 w-100 border-0">
-      <div class="card-header bg-success text-white py-1">
+    <div class="card shadow-sm mb-3 w-100 border-0 add-card">
+      <div class="card-header py-1">
         新しい種目を追加（カテゴリーを選択してください）
       </div>
       <div class="card-body p-2">
@@ -13,7 +33,7 @@
       </div>
     </div>
 
-    <ul class="nav nav-tabs mb-3 flex-wrap">
+    <ul class="nav nav-pills mb-3 flex-wrap">
       <% @categories.each do |category| %>
         <li class="nav-item">
           <%= link_to category.name,

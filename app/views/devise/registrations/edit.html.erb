@@ -1,6 +1,22 @@
 <% content_for :title, "LiftLog - プロフィール編集" %>
 
-<div class="container mt-2">
+<div class="container-fluid mt-2 profile-page">
+  <style>
+    .profile-page h2 { font-size: 1.4rem; margin-bottom: .75rem;}
+    .profile-page form { background: #fff; border: 1px solid #e9f2fb; padding: 1rem; border-radius: .6rem; box-shadow: 0 1px 6px rgba(11,94,168,0.04); }
+    .profile-page .form-label { font-weight: 600; color: #333; }
+    .profile-page .form-control { padding: .6rem .75rem; border-radius: .5rem; }
+    .profile-page .input-group-text { background: transparent; border-left: none; cursor: pointer; }
+    .profile-page .btn-primary { font-weight: 700; padding: .55rem .75rem; }
+    .profile-page .muted-note { color: #6c757d; font-size: .95rem; }
+    .profile-page .action-links { margin-top: .75rem; }
+    .profile-page .action-links .btn { padding: .55rem .75rem; }
+    .profile-page .danger-note { color: #6c757d; font-size: .9rem; margin-top: .5rem; }
+    @media (min-width: 768px) {
+      .profile-page { max-width: 920px; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
+    }
+  </style>
+
   <h2 class="mb-4">プロフィール編集</h2>
 
   <%= render "devise/shared/error_messages" %>
@@ -60,14 +76,17 @@
       <%= f.submit "更新", class: "btn btn-primary w-100" %>
     </div>
   <% end %>
+  <div class="action-links d-grid gap-2">
+    <%= link_to "ログアウト", destroy_user_session_path,
+                        data: { turbo_method: :delete, turbo_confirm: "ログアウトしますか？" },
+                        class: "btn btn-outline-danger w-100" %>
+  </div>
 
-  <%= link_to "ログアウト", destroy_user_session_path,
-                      data: { turbo_method: :delete, turbo_confirm: "ログアウトしますか？" },
-                      class: "btn btn-danger w-100 mb-3" %>
+  <div class="delete-box mt-3 p-3 border border-danger rounded" style="background-color: #fff5f5;">
+    <%= link_to "アカウント削除", registration_path(resource_name),
+                data: { turbo_method: :delete, turbo_confirm: "本当にアカウントを削除しますか？" },
+                class: "btn btn-danger w-100" %>
 
-  <%= link_to "アカウント削除", registration_path(resource_name),
-              data: { turbo_method: :delete, turbo_confirm: "本当にアカウントを削除しますか？" },
-              class: "btn btn-outline-danger w-100 mb-1" %>
-
-  <p class="text-muted">※ アカウントを削除した場合、すべてのデータが削除されます。アカウントを再作成しても、元のデータは復元されません。</p>
+    <p class="danger-note mb-0 mt-2">※ アカウントを削除した場合、すべてのデータが削除されます。アカウントを再作成しても、元のデータは復元されません。</p>
+  </div>
 </div>

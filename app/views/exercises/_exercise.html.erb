@@ -1,7 +1,14 @@
 <%= turbo_frame_tag dom_id(exercise) do %>
+  <style>
+    @media (min-width: 992px) {
+      .exercise-actions .btn { min-width: 140px; }
+    }
+    .exercise-actions form { display: inline-block; margin: 0; }
+  </style>
+
   <div class="list-group-item d-flex justify-content-between align-items-center">
     <span class="exercise-name"><%= exercise.name %></span>
-    <div class="btn-group btn-group-sm">
+    <div class="exercise-actions d-flex gap-2 align-items-center">
       <%= link_to "編集", edit_exercise_path(exercise), class: "btn btn-sm btn-primary" %>
       <%= button_to "削除", exercise_path(exercise),
             method: :delete,

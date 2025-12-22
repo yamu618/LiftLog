@@ -6,16 +6,25 @@
   <% end %>
   
   <%= form_with(model: @exercise, local: false) do |f| %>
+    <style>
+      /* Make update/cancel more spaced and wider on desktop */
+      @media (min-width: 992px) {
+        .exercise-form-actions .btn { min-width: 140px; }
+      }
+      .exercise-form-actions { display: inline-flex; gap: .5rem; align-items: center; }
+    </style>
+
     <div class="list-group-item d-flex align-items-center gap-2">
-      
       <%= f.text_field :name, class: "form-control", placeholder: "種目名" %>
       <%= f.hidden_field :category_id, value: @exercise.category_id %>
 
-      <%= f.submit "更新", class: "btn btn-sm btn-success" %>
-      <%= link_to "キャンセル",
-            exercises_path(category_id: @exercise.category_id),
-            class: "btn btn-secondary btn-sm",
-            data: { turbo: false } %>
+      <div class="exercise-form-actions">
+        <%= f.submit "更新", class: "btn btn-sm btn-success" %>
+        <%= link_to "キャンセル",
+              exercises_path(category_id: @exercise.category_id),
+              class: "btn btn-secondary btn-sm",
+              data: { turbo: false } %>
+      </div>
     </div>
   <% end %>
 <% end %>

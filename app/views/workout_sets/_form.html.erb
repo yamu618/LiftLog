@@ -24,12 +24,16 @@
           <% end %>
         </div>
 
-        <div class="d-flex justify-content-end gap-2 mt-2">
-          <%= f.submit "更新", class: "btn btn-success btn-sm" %>
-          <%= link_to "キャンセル",
-                workout_path(@set.workout),
-                data: { turbo_frame: dom_id(@set) },
-                class: "btn btn-secondary btn-sm" %>
+        <div class="row g-1 mt-2">
+          <div class="col-6">
+            <%= f.submit "更新", class: "btn btn-success btn-sm w-100" %>
+          </div>
+          <div class="col-6">
+            <%= link_to "キャンセル",
+                  workout_path(@set.workout),
+                  data: { turbo_frame: dom_id(@set) },
+                  class: "btn btn-secondary btn-sm w-100" %>
+          </div>
         </div>
       <% end %>
     </div>

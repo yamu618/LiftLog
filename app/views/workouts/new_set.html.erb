@@ -54,14 +54,14 @@
       </div>
     </template>
 
-    <div class="mt-3">
-      <button type="button", class="btn btn-outline-primary" data-action="sets#add">＋ セットを追加</button>
-      <button type="button", class="btn btn-outline-danger ms-2" data-action="sets#remove">－ セットを削除</button>
+    <div class="mt-3 d-flex gap-2">
+      <button type="button" class="btn btn-outline-primary w-50" data-action="sets#add">＋ セットを追加</button>
+      <button type="button" class="btn btn-outline-danger w-50" data-action="sets#remove">－ セットを削除</button>
     </div>
 
-    <div class="mt-4">
-      <%= f.submit "登録", class: "btn btn-success" %>
-      <%= link_to "キャンセル", workout_path(@workout), class: "btn btn-secondary ms-2" %>
+    <div class="mt-4 d-flex gap-2">
+      <%= f.submit "登録", class: "btn btn-success w-50" %>
+      <%= link_to "キャンセル", workout_path(@workout), class: "btn btn-secondary w-50" %>
     </div>
   <% end %>
 </div>

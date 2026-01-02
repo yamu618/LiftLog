@@ -4,6 +4,9 @@
   <h2 class="mb-4">セット追加</h2>
 
   <%= form_with url: create_set_workout_path(@workout), method: :post, data: { turbo: false } do |f| %>
+    <%= hidden_field_tag :date, @workout.performed_on %>
+    <%= hidden_field_tag :start_date, @start_date %>
+    
     <div data-sets-target="container">
       <% @sets.each_with_index do |set, i| %>
         <div class="d-flex gap-2 mb-2 set-row">
@@ -61,7 +64,7 @@
 
     <div class="mt-4 d-flex gap-2">
       <%= f.submit "登録", class: "btn btn-success w-50" %>
-      <%= link_to "キャンセル", workout_path(@workout), class: "btn btn-secondary w-50" %>
+      <%= link_to "キャンセル", workout_path(@workout, date: @workout.performed_on, start_date: @start_date), class: "btn btn-secondary w-50" %>
     </div>
   <% end %>
 </div>

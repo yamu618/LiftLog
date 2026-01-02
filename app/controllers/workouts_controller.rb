@@ -31,7 +31,7 @@ class WorkoutsController < ApplicationController
     if @workout.save
       check_training_days_milestone
 
-      redirect_to workouts_path(date: @workout.performed_on), notice: "ワークアウトを作成しました"
+      redirect_to workouts_path(date: @workout.performed_on, start_date: params[:start_date]), notice: "ワークアウトを作成しました"
     else
       @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
       @categories = Category.order(:id)
@@ -54,10 +54,12 @@ class WorkoutsController < ApplicationController
   end
 
   def new_set
+    @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
     @sets = [@workout.workout_sets.build(weight: 0, reps: 0, duration: 0, distance: 0)]
   end
 
   def create_set
+    @start_date = params[:start_date].present? ? Date.parse(params[:start_date]) : Time.zone.today.beginning_of_month
     @sets = []
     success = true
 
@@ -87,7 +89,7 @@ class WorkoutsController < ApplicationController
 
       flash[:personal_best_create] = { amount: amount, type: type } if amount.present?
 
-      redirect_to workout_path(@workout), notice: "#{@sets.size}件のセットを追加しました"
+      redirect_to workout_path(@workout, date: params[:date], start_date: params[:start_date]), notice: "#{@sets.size}件のセットを追加しました"
     else
       flash.now[:alert] = "重量と回数は0以上で入力してください。"
       @sets = [@workout.workout_sets.build(weight: 0, reps: 0, duration: 0, distance: 0)] if @sets.blank?
@@ -102,7 +104,7 @@ class WorkoutsController < ApplicationController
       .first
 
     if previous_workout.nil?
-      redirect_to workout_path(@workout), alert: "前回の記録がありませんでした。"
+      redirect_to workout_path(@workout, date: params[:date], start_date: params[:start_date]), alert: "前回の記録がありませんでした。"
     else
       previous_workout.workout_sets.each do |set|
         @workout.workout_sets.create!(
@@ -112,7 +114,7 @@ class WorkoutsController < ApplicationController
           distance: set.distance
         )
       end
-      redirect_to workout_path(@workout), notice: "前回の記録をコピーしました。"
+      redirect_to workout_path(@workout, date: params[:date], start_date: params[:start_date]), notice: "前回の記録をコピーしました。"
     end
   end
 

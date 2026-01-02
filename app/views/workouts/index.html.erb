@@ -72,7 +72,7 @@
               </div>
 
               <div class="d-flex gap-1 workout-actions">
-                <%= link_to "セット管理", workout_path(workout, start_date: @start_date.beginning_of_month), class: "btn btn-sm btn-primary w-50", data: { turbo: false } %>
+                <%= link_to "セット管理", workout_path(workout, date: workout.performed_on, start_date: @start_date.beginning_of_month), class: "btn btn-sm btn-primary w-50", data: { turbo: false } %>
                 <%= link_to "削除", workout_path(workout, start_date: @start_date.beginning_of_month),
                             data: { turbo_method: :delete, turbo_confirm: "削除しますか？" },
                             class: "btn btn-sm btn-danger w-50" %>

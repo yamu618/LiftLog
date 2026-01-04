@@ -72,6 +72,8 @@ https://liftlog-app.com
 ### レポート機能（総重量推移・自己ベスト）
 ![report](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/4009473/61374a8e-d409-4702-85f3-7052691af1e3.gif)
 
+※ その他の実装機能・詳細は[Qiita記事](https://qiita.com/yamu618/items/fb6239045855150a6c7c)にて、まとめています。
+
 ---
 
 ## 🧠 工夫したポイント

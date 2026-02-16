@@ -40,7 +40,7 @@ gem "bootsnap", require: false
 gem "importmap-rails"
 
 # 認証
-gem 'devise', '~> 4.9.4'
+gem 'devise', '~> 5.0.1'
 gem 'devise-i18n', '~> 1.15'
 gem 'cancancan', '~> 3.6'
 
